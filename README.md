@@ -206,13 +206,13 @@ We used **pg\_dump** and **pg\_restore** for reliable backups:
 * **Backup:**
 
   ```bash
-  pg_dump -h localhost -U rubenaar -Fc -f "C:/Users/ruben/backup_2025-05-11.backup" mydatabase
+  pg_dump -h localhost -U rubenaar -Fc -f "C:/Users/ruben/backup_2025-03-08.backup" mydatabase
   ```
 * **Restore:**
 
   ```bash
   createdb -h localhost -U rubenaar restored_db
-  pg_restore -h localhost -U rubenaar -d restored_db -v "C:/Users/ruben/backup_2025-05-11.backup"
+  pg_restore -h localhost -U rubenaar -d restored_db -v "C:/Users/ruben/backup_2025-03-08.backup"
   ```
 
 *Figure 6: pgAdmin backup dialog*
