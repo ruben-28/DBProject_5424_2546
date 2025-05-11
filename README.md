@@ -201,13 +201,11 @@ A Python script automates ingestion:
 ![SQL Scirpt](stage1/SQL_script.png)
 *Figure 5: AI-generated SQL for `Transaction`* Backup & Restore
 
-We used **pg\_dump** and **pg\_restore** for reliable backups:
+We used pgAdmin **Backup** for reliable backups:
 
 * **Backup:**
-
-  ```bash
-  pg_dump -h localhost -U rubenaar -Fc -f "C:/Users/ruben/backup_2025-03-08.backup" mydatabase
-  ```
+![Backup](stage1/backup.png)
+*Figure 6: pgAdmin backup dialog*
 * **Restore:**
 
   ```bash
@@ -215,7 +213,7 @@ We used **pg\_dump** and **pg\_restore** for reliable backups:
   pg_restore -h localhost -U rubenaar -d restored_db -v "C:/Users/ruben/backup_2025-03-08.backup"
   ```
 
-*Figure 6: pgAdmin backup dialog*
+
 *Figure 7: Restored database tables in pgAdmin*
 
 ---
