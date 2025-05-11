@@ -55,10 +55,10 @@ The primary objectives for Stage A are:
 
 Insert your ERD and DSD diagrams below:
 
-![ERD Diagram](DBProject_5424_2546/stage1/ERD.png)
+![ERD Diagram](stage1/ERD.png)
 *Figure 1: Entity-Relationship Diagram*
 
-![DSD Diagram](DBProject/stage1/DSD.png)
+![DSD Diagram](stage1/DSD.png)
 *Figure 2: Data Structure Diagram*
 
 ---
@@ -159,8 +159,8 @@ To demonstrate data loading into the **`Transaction`** table, we employed three 
 * **CSV Generation**: Used **Mockaroo** to generate a CSV file with fields matching the `Transaction` schema.
 * **Import via pgAdmin**: In pgAdmin, right-click **`Transaction`** → **Import/Export Data…** → select the Mockaroo-generated CSV → map columns → execute.
 
-![CSV Import](DBProject/stage1/csv_import.png)
-![CSV Import](DBProject/stage1/csv_table.png)
+![CSV Import](stage1/csv_import.png)
+![CSV Import](stage1/csv_table.png)
 *Figure 3: Importing `Transaction` CSV via pgAdmin*
 
 ### 2. Programming Method (Python + psycopg2)
@@ -190,7 +190,7 @@ A Python script automates ingestion:
    conn.close()
    ```
 
-![Python Script](DBProject/stage1/python_script.png)
+![Python Script](stage1/python_script.png)
 *Figure 4: Python script importing into `Transaction`*
 
 ### 3. SQL Generation Method (AI-generated)
