@@ -55,7 +55,7 @@ The primary objectives for Stage A are:
 
 Insert your ERD and DSD diagrams below:
 
-!\[ERD Diagram]\(DBProject/stage1/ERD.png)
+!\[ERD Diagram]\(DBProject_5424_2546/stage1/ERD.png)
 *Figure 1: Entity-Relationship Diagram*
 
 !\[DSD Diagram]\(DBProject/stage1/DSD.png)
