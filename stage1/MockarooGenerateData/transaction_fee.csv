@@ -1,0 +1,401 @@
+fee_id,transaction_id,fee_type,amount,description,waived
+1,395,ATM fee,9496591.2,,yes
+2,235,overdraft fee,3175187.12,,no
+3,237,ATM fee,2872737.68,,yes
+4,369,overdraft fee,6703941.55,,yes
+5,374,wire transfer fee,2387658.12,,yes
+6,109,ATM fee,7563405.23,,no
+7,178,wire transfer fee,1415888.79,,no
+8,96,account maintenance fee,8951607.85,,yes
+9,144,ATM fee,5193166.11,,yes
+10,17,account maintenance fee,984486.67,,no
+11,344,account maintenance fee,7573340.91,,no
+12,154,ATM fee,7677838.38,,yes
+13,335,account maintenance fee,2637163.98,,no
+14,218,foreign transaction fee,5428638.05,,no
+15,138,overdraft fee,4952496.76,,yes
+16,333,account maintenance fee,7019071.15,,no
+17,267,wire transfer fee,6687849.46,,yes
+18,72,wire transfer fee,6139718.22,,no
+19,191,wire transfer fee,4495150.71,,no
+20,356,wire transfer fee,2202123.22,,yes
+21,224,foreign transaction fee,6757492.28,,no
+22,362,overdraft fee,2760454.16,,no
+23,294,foreign transaction fee,9242044.84,,yes
+24,237,foreign transaction fee,9657061.36,,no
+25,393,ATM fee,7036009.72,,yes
+26,19,account maintenance fee,7297843.77,,no
+27,151,overdraft fee,9591674.88,,no
+28,166,account maintenance fee,670277.22,,yes
+29,354,wire transfer fee,1214977.32,,no
+30,17,foreign transaction fee,9392590.2,,yes
+31,326,overdraft fee,2912029.83,,no
+32,132,account maintenance fee,6006902.87,,no
+33,295,account maintenance fee,6743501.87,,no
+34,26,account maintenance fee,8802120.19,,no
+35,239,ATM fee,7776334.05,,no
+36,234,ATM fee,5299870.07,,no
+37,296,account maintenance fee,8561632.39,,yes
+38,3,overdraft fee,953948.14,,yes
+39,265,foreign transaction fee,3582395.57,,yes
+40,2,foreign transaction fee,4316906.67,,yes
+41,46,foreign transaction fee,1372668.36,,yes
+42,365,overdraft fee,7861665.16,,no
+43,222,overdraft fee,4427306.38,,no
+44,9,ATM fee,7767586.87,,no
+45,184,account maintenance fee,7222761.46,,yes
+46,343,ATM fee,3626930.28,,no
+47,224,wire transfer fee,6940107.04,,no
+48,148,account maintenance fee,493340.7,,no
+49,223,wire transfer fee,4106242.24,,no
+50,322,wire transfer fee,6864928.49,,yes
+51,98,overdraft fee,7521406.18,,yes
+52,113,foreign transaction fee,3322625.2,,yes
+53,218,account maintenance fee,9897954.78,,yes
+54,324,ATM fee,3670272.35,,yes
+55,135,overdraft fee,5161715.0,,no
+56,273,foreign transaction fee,6710577.64,,yes
+57,188,wire transfer fee,8187510.59,,yes
+58,172,wire transfer fee,1888815.45,,no
+59,7,ATM fee,8223799.13,,yes
+60,74,account maintenance fee,9211295.67,,no
+61,363,ATM fee,404365.09,,yes
+62,383,wire transfer fee,8383148.67,,no
+63,236,ATM fee,1177709.43,,no
+64,229,account maintenance fee,6390772.45,,yes
+65,97,overdraft fee,7639476.01,,yes
+66,223,wire transfer fee,7686938.8,,yes
+67,118,account maintenance fee,658091.67,,no
+68,161,ATM fee,4642666.34,,yes
+69,55,account maintenance fee,2787909.06,,yes
+70,194,account maintenance fee,2148859.33,,no
+71,286,overdraft fee,2686329.68,,no
+72,93,overdraft fee,7119846.1,,no
+73,108,foreign transaction fee,2238497.06,,yes
+74,208,wire transfer fee,9620726.9,,yes
+75,236,ATM fee,2066382.61,,no
+76,261,overdraft fee,3280349.32,,no
+77,26,overdraft fee,1948345.75,,yes
+78,211,ATM fee,7062545.45,,no
+79,375,ATM fee,8603225.65,,no
+80,105,ATM fee,6366013.95,,yes
+81,160,foreign transaction fee,1279189.55,,yes
+82,365,wire transfer fee,3858670.33,,no
+83,82,account maintenance fee,8284101.53,,no
+84,339,overdraft fee,4011228.41,,no
+85,172,foreign transaction fee,4745131.79,,yes
+86,152,wire transfer fee,7822846.57,,yes
+87,341,account maintenance fee,2909990.39,,no
+88,384,overdraft fee,4475420.99,,no
+89,299,account maintenance fee,4137803.08,,yes
+90,206,overdraft fee,9597835.87,,no
+91,155,ATM fee,6832671.46,,yes
+92,192,foreign transaction fee,3338328.2,,yes
+93,361,account maintenance fee,5493088.18,,yes
+94,2,foreign transaction fee,4378377.16,,no
+95,149,wire transfer fee,9939893.08,,yes
+96,2,overdraft fee,5829710.69,,no
+97,123,account maintenance fee,9567267.34,,no
+98,126,foreign transaction fee,5020699.61,,yes
+99,308,overdraft fee,9722307.83,,yes
+100,78,ATM fee,4842197.16,,yes
+101,244,ATM fee,657792.83,,yes
+102,225,overdraft fee,5296545.05,,no
+103,220,foreign transaction fee,7185863.55,,yes
+104,126,account maintenance fee,7863414.25,,no
+105,201,foreign transaction fee,6952315.67,,no
+106,276,ATM fee,6048823.81,,yes
+107,77,account maintenance fee,6969457.0,,no
+108,109,ATM fee,4251724.15,,no
+109,213,overdraft fee,6623153.13,,no
+110,125,wire transfer fee,5115613.82,,yes
+111,292,overdraft fee,3159891.95,,yes
+112,182,overdraft fee,473658.98,,no
+113,338,foreign transaction fee,6345153.57,,no
+114,264,overdraft fee,5183645.89,,no
+115,336,account maintenance fee,1932601.17,,yes
+116,211,account maintenance fee,4301671.55,,yes
+117,390,ATM fee,2965007.81,,yes
+118,161,wire transfer fee,7001357.05,,yes
+119,20,ATM fee,960805.1,,no
+120,89,wire transfer fee,3925591.43,,yes
+121,321,ATM fee,7360073.39,,yes
+122,252,overdraft fee,6014354.13,,no
+123,327,ATM fee,8020525.26,,no
+124,245,ATM fee,49149.87,,yes
+125,187,foreign transaction fee,9565042.4,,no
+126,105,foreign transaction fee,2468839.4,,no
+127,30,wire transfer fee,4483245.57,,no
+128,342,account maintenance fee,7891675.75,,no
+129,189,wire transfer fee,9625310.72,,no
+130,151,wire transfer fee,3022616.63,,yes
+131,392,overdraft fee,2299278.79,,yes
+132,183,account maintenance fee,9753919.71,,yes
+133,70,account maintenance fee,6355805.73,,no
+134,24,ATM fee,6137335.18,,no
+135,393,wire transfer fee,4227449.25,,yes
+136,207,ATM fee,3426871.16,,no
+137,320,account maintenance fee,6313435.67,,yes
+138,177,wire transfer fee,1364041.24,,yes
+139,3,foreign transaction fee,2388797.38,,yes
+140,1,overdraft fee,3562756.87,,no
+141,82,foreign transaction fee,4329868.16,,no
+142,88,foreign transaction fee,2391832.07,,yes
+143,34,ATM fee,6800199.97,,yes
+144,270,overdraft fee,1560267.58,,yes
+145,253,overdraft fee,1827804.25,,no
+146,109,wire transfer fee,7500669.45,,no
+147,206,overdraft fee,2468300.72,,no
+148,209,account maintenance fee,2299609.48,,no
+149,256,wire transfer fee,6698628.8,,no
+150,56,ATM fee,1843949.83,,yes
+151,33,foreign transaction fee,1615237.73,,no
+152,111,ATM fee,334780.91,,yes
+153,332,overdraft fee,5055275.99,,yes
+154,12,overdraft fee,612578.32,,no
+155,278,overdraft fee,5815592.99,,yes
+156,324,ATM fee,1920746.48,,yes
+157,157,wire transfer fee,6329505.86,,no
+158,377,overdraft fee,7915364.19,,no
+159,291,wire transfer fee,2395467.17,,no
+160,45,foreign transaction fee,39850.51,,yes
+161,27,wire transfer fee,5261946.36,,no
+162,358,ATM fee,1923187.54,,no
+163,62,ATM fee,9504514.92,,no
+164,96,account maintenance fee,301893.41,,yes
+165,72,wire transfer fee,1198681.22,,yes
+166,240,foreign transaction fee,6771789.6,,no
+167,8,account maintenance fee,60948.4,,no
+168,342,wire transfer fee,918115.41,,no
+169,187,account maintenance fee,7435906.42,,yes
+170,400,foreign transaction fee,744360.48,,yes
+171,285,overdraft fee,6878796.34,,yes
+172,115,overdraft fee,6033925.57,,no
+173,358,foreign transaction fee,8361848.71,,yes
+174,27,overdraft fee,6785451.01,,no
+175,174,foreign transaction fee,6934531.67,,no
+176,332,ATM fee,9470773.7,,no
+177,79,account maintenance fee,1636621.97,,no
+178,332,ATM fee,8409170.75,,no
+179,354,ATM fee,5459733.1,,yes
+180,242,account maintenance fee,5847723.3,,yes
+181,143,foreign transaction fee,2356311.77,,no
+182,265,wire transfer fee,167502.56,,no
+183,244,overdraft fee,9489534.03,,no
+184,253,foreign transaction fee,8823826.34,,yes
+185,346,overdraft fee,5596374.82,,no
+186,311,wire transfer fee,5246380.85,,yes
+187,68,wire transfer fee,7897984.98,,yes
+188,165,wire transfer fee,9440535.41,,yes
+189,140,foreign transaction fee,7645858.35,,no
+190,78,overdraft fee,6510225.05,,yes
+191,330,ATM fee,5699988.67,,no
+192,118,overdraft fee,6785292.77,,no
+193,194,wire transfer fee,9644917.59,,yes
+194,195,account maintenance fee,5468855.34,,yes
+195,116,account maintenance fee,7090056.29,,yes
+196,352,overdraft fee,4475940.28,,no
+197,385,account maintenance fee,269016.7,,no
+198,39,ATM fee,2142302.62,,no
+199,77,foreign transaction fee,1887146.38,,no
+200,273,foreign transaction fee,9899222.69,,no
+201,107,foreign transaction fee,7274619.3,,yes
+202,122,ATM fee,7313301.74,,no
+203,328,wire transfer fee,5472259.87,,no
+204,188,overdraft fee,7513176.54,,yes
+205,107,foreign transaction fee,8292623.51,,yes
+206,187,ATM fee,4388412.2,,yes
+207,199,ATM fee,3827178.21,,no
+208,203,overdraft fee,5092259.8,,no
+209,356,overdraft fee,1469019.27,,no
+210,72,account maintenance fee,3633197.8,,no
+211,355,foreign transaction fee,3546357.38,,yes
+212,234,overdraft fee,4439181.05,,no
+213,366,account maintenance fee,7723673.04,,no
+214,212,wire transfer fee,3155305.12,,no
+215,197,foreign transaction fee,5188807.36,,yes
+216,49,wire transfer fee,6513867.85,,yes
+217,314,overdraft fee,6756756.86,,yes
+218,70,foreign transaction fee,7503644.59,,no
+219,193,wire transfer fee,8407672.33,,yes
+220,364,wire transfer fee,8968633.65,,no
+221,163,ATM fee,7246947.44,,no
+222,212,overdraft fee,7461746.31,,yes
+223,69,account maintenance fee,8275907.88,,no
+224,190,wire transfer fee,8009169.84,,yes
+225,70,ATM fee,9889174.13,,no
+226,371,ATM fee,3431739.56,,yes
+227,104,foreign transaction fee,3357796.6,,no
+228,31,wire transfer fee,2996977.64,,no
+229,196,wire transfer fee,9974699.62,,no
+230,308,overdraft fee,4350996.71,,yes
+231,273,wire transfer fee,9925418.99,,yes
+232,222,account maintenance fee,6900275.33,,no
+233,36,ATM fee,6832367.74,,no
+234,158,foreign transaction fee,8496505.24,,no
+235,89,foreign transaction fee,3933756.67,,no
+236,224,wire transfer fee,1236502.79,,no
+237,346,overdraft fee,4652075.52,,no
+238,122,overdraft fee,3724923.38,,yes
+239,333,wire transfer fee,613258.54,,no
+240,334,account maintenance fee,6254292.73,,yes
+241,30,account maintenance fee,3468885.42,,no
+242,188,wire transfer fee,5462682.31,,yes
+243,252,ATM fee,6047693.21,,no
+244,342,wire transfer fee,3983286.47,,yes
+245,198,account maintenance fee,5829857.06,,yes
+246,352,ATM fee,3202870.57,,no
+247,2,ATM fee,4598326.95,,no
+248,114,account maintenance fee,6811974.78,,no
+249,35,wire transfer fee,6303604.73,,yes
+250,346,overdraft fee,6682917.05,,no
+251,393,wire transfer fee,5817185.84,,no
+252,114,foreign transaction fee,7982108.64,,no
+253,240,foreign transaction fee,3136045.95,,no
+254,301,overdraft fee,3787576.85,,no
+255,86,wire transfer fee,9638398.4,,yes
+256,148,foreign transaction fee,116278.48,,no
+257,115,account maintenance fee,6918699.51,,no
+258,16,wire transfer fee,9821826.8,,yes
+259,189,overdraft fee,6957676.8,,no
+260,215,account maintenance fee,547777.69,,no
+261,147,ATM fee,6195213.65,,yes
+262,263,wire transfer fee,2292496.97,,yes
+263,338,ATM fee,8387160.37,,no
+264,271,foreign transaction fee,9479125.47,,no
+265,16,wire transfer fee,9193946.89,,no
+266,321,account maintenance fee,7189483.96,,no
+267,170,overdraft fee,482103.36,,yes
+268,290,account maintenance fee,449604.64,,no
+269,224,account maintenance fee,9954805.5,,yes
+270,360,overdraft fee,62860.51,,no
+271,192,wire transfer fee,7757931.79,,no
+272,221,ATM fee,9080131.25,,yes
+273,236,foreign transaction fee,7217591.69,,yes
+274,39,ATM fee,2883662.43,,yes
+275,40,overdraft fee,1903104.92,,no
+276,130,foreign transaction fee,6316148.23,,no
+277,214,overdraft fee,8444581.37,,yes
+278,294,foreign transaction fee,6587782.3,,yes
+279,93,account maintenance fee,2638610.67,,no
+280,104,overdraft fee,2339666.81,,yes
+281,158,foreign transaction fee,3680496.14,,no
+282,252,overdraft fee,5672300.01,,yes
+283,368,foreign transaction fee,9790700.33,,yes
+284,378,foreign transaction fee,7145757.05,,no
+285,390,overdraft fee,4591281.98,,no
+286,167,ATM fee,2821621.48,,no
+287,17,wire transfer fee,256277.0,,no
+288,63,ATM fee,6951629.23,,yes
+289,306,overdraft fee,2403304.7,,yes
+290,386,foreign transaction fee,2699303.74,,yes
+291,329,account maintenance fee,8872793.51,,no
+292,12,foreign transaction fee,988661.27,,no
+293,14,wire transfer fee,9350819.03,,yes
+294,231,account maintenance fee,344997.52,,yes
+295,158,account maintenance fee,9278095.63,,yes
+296,261,account maintenance fee,9381331.97,,no
+297,225,wire transfer fee,7005810.26,,no
+298,176,wire transfer fee,4151658.33,,no
+299,347,ATM fee,7562386.53,,no
+300,132,ATM fee,8747549.41,,no
+301,310,overdraft fee,9001269.36,,no
+302,346,foreign transaction fee,5766250.27,,no
+303,72,overdraft fee,8144340.74,,no
+304,236,overdraft fee,6258403.09,,yes
+305,91,overdraft fee,7247430.48,,no
+306,102,overdraft fee,9654421.12,,no
+307,79,account maintenance fee,9520389.73,,yes
+308,296,account maintenance fee,9956386.06,,yes
+309,263,overdraft fee,9277750.8,,no
+310,276,wire transfer fee,8091750.03,,no
+311,316,overdraft fee,6060938.58,,no
+312,240,account maintenance fee,6905273.01,,no
+313,333,ATM fee,482007.35,,no
+314,17,overdraft fee,4294482.89,,no
+315,337,ATM fee,4968493.38,,no
+316,107,ATM fee,7416369.85,,yes
+317,8,account maintenance fee,4672224.57,,no
+318,150,overdraft fee,8133602.35,,no
+319,252,account maintenance fee,3597152.89,,yes
+320,84,wire transfer fee,5506784.52,,no
+321,379,wire transfer fee,9916963.96,,yes
+322,211,wire transfer fee,1525336.19,,yes
+323,110,wire transfer fee,9944645.72,,yes
+324,29,ATM fee,4078385.69,,no
+325,158,ATM fee,3159446.36,,no
+326,22,wire transfer fee,5423172.68,,yes
+327,242,account maintenance fee,4352339.27,,yes
+328,264,overdraft fee,537883.11,,yes
+329,324,foreign transaction fee,4034838.4,,no
+330,399,overdraft fee,6989893.64,,yes
+331,306,overdraft fee,8226306.94,,yes
+332,386,overdraft fee,9134855.48,,yes
+333,85,overdraft fee,7023785.01,,no
+334,74,ATM fee,5164011.93,,no
+335,139,foreign transaction fee,3001901.22,,yes
+336,297,overdraft fee,9723376.9,,no
+337,259,wire transfer fee,3845306.68,,no
+338,245,wire transfer fee,9974516.4,,no
+339,287,wire transfer fee,306908.79,,no
+340,238,foreign transaction fee,5881149.42,,yes
+341,346,wire transfer fee,237593.41,,no
+342,171,wire transfer fee,4123866.4,,no
+343,205,wire transfer fee,8629223.08,,yes
+344,74,overdraft fee,7759537.54,,yes
+345,108,foreign transaction fee,5104958.42,,no
+346,289,wire transfer fee,4552371.14,,no
+347,235,ATM fee,312916.55,,no
+348,85,ATM fee,5173641.01,,no
+349,383,account maintenance fee,6373468.46,,yes
+350,93,account maintenance fee,6230706.02,,yes
+351,23,account maintenance fee,7898675.4,,no
+352,38,overdraft fee,9999049.86,,no
+353,392,wire transfer fee,2310429.3,,no
+354,164,ATM fee,2896310.77,,no
+355,151,overdraft fee,3745067.94,,no
+356,320,wire transfer fee,9809805.16,,yes
+357,285,foreign transaction fee,17968.73,,no
+358,389,account maintenance fee,4700649.58,,no
+359,69,account maintenance fee,8419862.23,,no
+360,308,account maintenance fee,2720361.28,,no
+361,192,ATM fee,8966428.96,,no
+362,193,account maintenance fee,1258322.77,,yes
+363,308,overdraft fee,7390336.42,,no
+364,341,foreign transaction fee,4778268.98,,yes
+365,36,wire transfer fee,5284464.05,,no
+366,7,ATM fee,1225931.16,,no
+367,271,account maintenance fee,1426502.25,,no
+368,270,account maintenance fee,3611446.0,,no
+369,63,wire transfer fee,8067332.38,,yes
+370,393,overdraft fee,3147250.49,,yes
+371,219,ATM fee,3854410.04,,no
+372,267,account maintenance fee,4521726.24,,no
+373,392,wire transfer fee,4630842.25,,no
+374,393,ATM fee,6226933.36,,no
+375,138,foreign transaction fee,3514425.58,,no
+376,270,ATM fee,5254960.91,,yes
+377,33,ATM fee,380345.31,,yes
+378,222,overdraft fee,5066929.32,,no
+379,390,wire transfer fee,2906340.26,,yes
+380,11,ATM fee,4130686.64,,no
+381,331,overdraft fee,8132508.97,,no
+382,92,account maintenance fee,1325316.14,,yes
+383,396,wire transfer fee,70941.65,,no
+384,142,overdraft fee,4401517.21,,yes
+385,138,overdraft fee,1657554.28,,yes
+386,184,overdraft fee,8710228.28,,yes
+387,285,wire transfer fee,5121371.41,,no
+388,306,overdraft fee,5118234.28,,no
+389,370,wire transfer fee,4501783.56,,no
+390,137,foreign transaction fee,3359193.89,,yes
+391,10,foreign transaction fee,3969286.21,,yes
+392,319,ATM fee,6538905.84,,no
+393,97,wire transfer fee,5316812.59,,no
+394,294,foreign transaction fee,7578192.82,,no
+395,334,account maintenance fee,912876.1,,no
+396,307,wire transfer fee,2992159.29,,yes
+397,102,ATM fee,7171815.72,,no
+398,161,account maintenance fee,7799715.83,,yes
+399,243,account maintenance fee,2885154.78,,no
+400,205,ATM fee,7106196.56,,no
