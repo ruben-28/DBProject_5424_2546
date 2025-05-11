@@ -201,23 +201,20 @@ A Python script automates ingestion:
 ![SQL Scirpt](SQL_script.png)
 *Figure 5: AI-generated SQL for `Transaction`* Backup & Restore
 
-We used **pg\_dump** and **pg\_restore** for reliable backups:
+We used pgAdmin **Backup** for reliable backups:
 
 * **Backup:**
-
-  ```bash
-  pg_dump -h localhost -U rubenaar -Fc -f "C:/Users/ruben/backup_2025-05-11.backup" mydatabase
-  ```
+![Backup](backup.png)
+*Figure 6: pgAdmin backup dialog*
 * **Restore:**
 
-  ```bash
-  createdb -h localhost -U rubenaar restored_db
-  pg_restore -h localhost -U rubenaar -d restored_db -v "C:/Users/ruben/backup_2025-05-11.backup"
-  ```
+We used pgAdmin **Restore** for reliable restore:
 
-*Figure 6: pgAdmin backup dialog*
+![Restore](restore.png)
+![Restore](restoredData.png)
 *Figure 7: Restored database tables in pgAdmin*
+
 
 ---
 
-*End of Stage A Report*
+*End of Stage 1 Report*
