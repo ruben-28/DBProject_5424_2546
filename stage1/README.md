@@ -198,7 +198,7 @@ A Python script automates ingestion:
 * **Generation**: Used an **AI tool** to produce bulk `INSERT` statements aligned with the `Transaction` schema.
 * **Execution**: Paste the AI-generated SQL into pgAdmin’s Query Tool and run.
 
-!\[SQL Scirpt]\(DBProject/stage1/SQL_script.png)
+![SQL Scirpt](SQL_script.png)
 *Figure 5: AI-generated SQL for `Transaction`* Backup & Restore
 
 We used **pg\_dump** and **pg\_restore** for reliable backups:
