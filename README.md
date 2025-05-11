@@ -216,4 +216,4 @@ We used pgAdmin **Restore** for reliable restore:
 
 ---
 
-*End of Stage A Report*
+*End of Stage 1 Report*
