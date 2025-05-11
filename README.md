@@ -208,12 +208,10 @@ We used pgAdmin **Backup** for reliable backups:
 *Figure 6: pgAdmin backup dialog*
 * **Restore:**
 
-  ```bash
-  createdb -h localhost -U rubenaar restored_db
-  pg_restore -h localhost -U rubenaar -d restored_db -v "C:/Users/ruben/backup_2025-03-08.backup"
-  ```
+We used pgAdmin **Restore** for reliable restore:
 
-
+![Restore](stage1/restore.png)
+![Restore](stage1/restoredData.png)
 *Figure 7: Restored database tables in pgAdmin*
 
 ---
