@@ -27,16 +27,16 @@ This document summarizes the work done during Stage G, which focused on integrat
 ## 📸 Diagrams and Screenshots
 
 ### 📂 1. DSD of the integrated module (Account)
-![Account DSD](stage%203/Pictures/DSD_Account.jpg)
+![Account DSD](Pictures/DSD_Account.jpg)
 
 ### 📂 2. ERD of the integrated module
-![Account ERD](stage%203/Pictures/ACCNT_ERD.png)
+![Account ERD](Pictures/ACCNT_ERD.png)
 
 ### 📂 3. Unified ERD after integration
-![Integrated_ERD](stage%203/Pictures/MergedERD.png)
+![Integrated_ERD](Pictures/MergedERD.png)
 
 ### 📂 4. Final DSD after integration
-![Unified_DSD](stage%203/Pictures/mergedDSD.jpg)
+![Unified_DSD](Pictures/mergedDSD.jpg)
 
 
 ---
@@ -61,20 +61,20 @@ Displays transactions with type, status, and associated account:
 SELECT * FROM TransactionOverviewView ;
 ```
 
-![Transaction View](stage%203/Pictures/TransactionView.png)
+![Transaction View](Pictures/TransactionView.png)
 
 
 #### Query 1 – Transactions of type 'withdrawal'
 ```sql
 SELECT * FROM TransactionOverviewView WHERE type_name = 'purhase';
 ```
-![View1_Query1](stage%203/Pictures/View1_Query1.png)
+![View1_Query1](Pictures/View1_Query1.png)
 
 #### Query 2 – Average amount per type
 ```sql
 SELECT type_name, AVG(amount) FROM TransactionOverviewView GROUP BY type_name;
 ```
-![View1_Query2](stage%203/Pictures/View1_Query2.png)
+![View1_Query2](Pictures/View1_Query2.png)
 
 ---
 
@@ -86,19 +86,19 @@ Displays account activities joined with account info:
 SELECT * FROM AccountSummaryView ;
 ```
 
-![AccntSumView](stage%203/Pictures/AccntSumView.png)
+![AccntSumView](Pictures/AccntSumView.png)
 
 #### Query 1 – Activities with amount > 1000
 ```sql
 SELECT * FROM AccountSummaryView WHERE amount > 1000;
 ```
-![AccntSumView_Query1](stage%203/Pictures/AccntSumView_Query1.png)
+![AccntSumView_Query1](Pictures/AccntSumView_Query1.png)
 
 #### Query 2 – Activity count per type
 ```sql
 SELECT activity_type, COUNT(*) FROM AccountSummaryView GROUP BY activity_type;
 ```
-![AccntSumView_Query2](stage%203/Pictures/AccntSumView_Query2.png)
+![AccntSumView_Query2](Pictures/AccntSumView_Query2.png)
 
 ---
 
