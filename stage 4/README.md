@@ -254,7 +254,7 @@ EXECUTE FUNCTION log_transaction_update();
 
 ![log_transaction_update](pictures/log_transaction_update_Function.jpg)
 ![before trigger effect](pictures/trigger_effect_before.jpg)
-![after trigger effect](pictures/trigger_effect_after_.jpg)
+![after trigger effect](pictures/trigger_effect_after.jpg)
 
 ### `update_account_balance_after_activity`
 
@@ -279,7 +279,7 @@ EXECUTE FUNCTION update_account_balance_after_activity();
 ```
 
 ![trigger function](pictures/triggerFunction.jpg)
-![trigger update account balance](pictures/Trigger_upadte_account_balance_.jpg)
+![trigger update account balance](pictures/Trigger_upadte_account_balance.jpg)
 
 ## Sample Programs
 
