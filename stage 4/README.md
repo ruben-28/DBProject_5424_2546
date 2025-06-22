@@ -191,8 +191,8 @@ $$;
 
 Example calls and outputs are illustrated in the screenshots:
 
-![call update inactive accounts](pictures/call%20update%20inactive_accounts.jpg)
-![call check & block overdraft](pictures/call%20check&block%20aacount%20if%20overdraft.jpg)
+![call update inactive accounts](pictures/call_update_inactive_accounts.jpg)
+![call check & block overdraft](pictures/call_check&block_aacount_if_overdraft.jpg)
 
 ## Triggers
 
@@ -252,9 +252,9 @@ FOR EACH ROW
 EXECUTE FUNCTION log_transaction_update();
 ```
 
-![log_transaction_update](pictures/log_transaction_update%20Function.jpg)
-![before trigger effect](pictures/trigger%20effect%20before.jpg)
-![after trigger effect](pictures/trigger%20effect%20after%20.jpg)
+![log_transaction_update](pictures/log_transaction_update_Function.jpg)
+![before trigger effect](pictures/trigger_effect_before.jpg)
+![after trigger effect](pictures/trigger_effect_after_.jpg)
 
 ### `update_account_balance_after_activity`
 
@@ -279,7 +279,7 @@ EXECUTE FUNCTION update_account_balance_after_activity();
 ```
 
 ![trigger function](pictures/triggerFunction.jpg)
-![trigger update account balance](pictures/Trigger%20upadte%20account%20balance%20.jpg)
+![trigger update account balance](pictures/Trigger_upadte_account_balance_.jpg)
 
 ## Sample Programs
 
@@ -287,17 +287,17 @@ Two SQL scripts demonstrate the routines:
 
 - `programme_principal1.sql` – computes total fees for account `270` in 2025 and invokes the overdraft check procedure.
   
-  ![Program 1](pictures/Program%201.jpg)
+  ![Program 1](pictures/Program_1.jpg)
 - `programme_principal2.sql` – showcases cursor usage (requires a function `get_transactions_by_status`).
   
-  ![Program 2](pictures/Program%202.jpg)
+  ![Program 2](pictures/Program_2.jpg)
 
 Additional screenshots show query results:
 
-![select total fees](pictures/select%20total%20fees.jpg)
-![select active restrictions](pictures/select%20active%20restrictions.jpg)
-![call overdraft 2](pictures/call%20check&block%20aacount%20if%20overdraft%202.jpg)
-![trigger transaction update](pictures/Trigger%20Transaction%20update.jpg)
+![select total fees](pictures/select_total_fees.jpg)
+![select active restrictions](pictures/select_active_restrictions.jpg)
+![call overdraft 2](pictures/call_check&block_aacount_if_overdraft_2.jpg)
+![trigger transaction update](pictures/Trigger_Transaction_update.jpg)
 
 ---
 
