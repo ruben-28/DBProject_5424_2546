@@ -336,16 +336,16 @@ This document summarizes the work done during Stage G, which focused on integrat
 ## 📸 Diagrams and Screenshots
 
 ### 📂 1. DSD of the integrated module (Account)
-![Account DSD](Pictures/DSD_Account.jpg)
+![Account DSD](stage%203/Pictures/DSD_Account.jpg)
 
 ### 📂 2. ERD of the integrated module
-![Account ERD](Pictures/ACCNT_ERD.png)
+![Account ERD](stage%203/Pictures/ACCNT_ERD.png)
 
 ### 📂 3. Unified ERD after integration
-![Integrated_ERD](Pictures/MergedERD.png)
+![Integrated_ERD](stage%203/Pictures/MergedERD.png)
 
 ### 📂 4. Final DSD after integration
-![Unified_DSD](Pictures/mergedDSD.jpg)
+![Unified_DSD](stage%203/Pictures/mergedDSD.jpg)
 
 
 ---
@@ -370,20 +370,20 @@ Displays transactions with type, status, and associated account:
 SELECT * FROM TransactionOverviewView ;
 ```
 
-![Transaction View](Pictures/TransactionView.png)
+![Transaction View](stage%203/Pictures/TransactionView.png)
 
 
 #### Query 1 – Transactions of type 'withdrawal'
 ```sql
 SELECT * FROM TransactionOverviewView WHERE type_name = 'purhase';
 ```
-![View1_Query1](Pictures/View1_Query1.png)
+![View1_Query1](stage%203/Pictures/View1_Query1.png)
 
 #### Query 2 – Average amount per type
 ```sql
 SELECT type_name, AVG(amount) FROM TransactionOverviewView GROUP BY type_name;
 ```
-![View1_Query2](Pictures/View1_Query2.png)
+![View1_Query2](stage%203/Pictures/View1_Query2.png)
 
 ---
 
@@ -395,19 +395,19 @@ Displays account activities joined with account info:
 SELECT * FROM AccountSummaryView ;
 ```
 
-![AccntSumView](Pictures/AccntSumView.png)
+![AccntSumView](stage%203/Pictures/AccntSumView.png)
 
 #### Query 1 – Activities with amount > 1000
 ```sql
 SELECT * FROM AccountSummaryView WHERE amount > 1000;
 ```
-![AccntSumView_Query1](Pictures/AccntSumView_Query1.png)
+![AccntSumView_Query1](stage%203/Pictures/AccntSumView_Query1.png)
 
 #### Query 2 – Activity count per type
 ```sql
 SELECT activity_type, COUNT(*) FROM AccountSummaryView GROUP BY activity_type;
 ```
-![AccntSumView_Query2](Pictures/AccntSumView_Query2.png)
+![AccntSumView_Query2](stage%203/Pictures/AccntSumView_Query2.png)
 
 ---
 
@@ -466,7 +466,7 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-![calculate_total_fees](pictures/calculate_total_fees_Function.jpg)
+![calculate_total_fees](stage%204/pictures/calculate_total_fees_Function.jpg)
 
 ### `get_active_restrictions`
 
@@ -508,7 +508,7 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-![get_active_restrictions](pictures/get_active_restrictions_Function.jpg)
+![get_active_restrictions](stage%204/pictures/get_active_restrictions_Function.jpg)
 
 ## Procedures
 
@@ -549,7 +549,7 @@ END;
 $$;
 ```
 
-![update_inactive_accounts](pictures/update_inactive_accounts_Function.jpg)
+![update_inactive_accounts](stage%204/pictures/update_inactive_accounts_Function.jpg)
 
 ### `check_and_block_account_if_overdraft`
 
@@ -612,12 +612,12 @@ END;
 $$;
 ```
 
-![check_and_block_account_if_overdraft](pictures/check_and_block_accoun_if_overdraft_Function.jpg)
+![check_and_block_account_if_overdraft](stage%204/pictures/check_and_block_accoun_if_overdraft_Function.jpg)
 
 Example calls and outputs are illustrated in the screenshots:
 
-![call update inactive accounts](pictures/call_update_inactive_accounts.jpg)
-![call check & block overdraft](pictures/call_check&block_aacount_if_overdraft.jpg)
+![call update inactive accounts](stage%204/pictures/call_update_inactive_accounts.jpg)
+![call check & block overdraft](stage%204/pictures/call_check&block_aacount_if_overdraft.jpg)
 
 ## Triggers
 
@@ -677,9 +677,9 @@ FOR EACH ROW
 EXECUTE FUNCTION log_transaction_update();
 ```
 
-![log_transaction_update](pictures/log_transaction_update_Function.jpg)
-![before trigger effect](pictures/trigger_effect_before.jpg)
-![after trigger effect](pictures/trigger_effect_after.jpg)
+![log_transaction_update](stage%204/pictures/log_transaction_update_Function.jpg)
+![before trigger effect](stage%204/pictures/trigger_effect_before.jpg)
+![after trigger effect](stage%204/pictures/trigger_effect_after.jpg)
 
 ### `update_account_balance_after_activity`
 
@@ -703,8 +703,8 @@ FOR EACH ROW
 EXECUTE FUNCTION update_account_balance_after_activity();
 ```
 
-![trigger function](pictures/triggerFunction.jpg)
-![trigger update account balance](pictures/Trigger_upadte_account_balance.jpg)
+![trigger function](stage%204/pictures/triggerFunction.jpg)
+![trigger update account balance](stage%204/pictures/Trigger_upadte_account_balance.jpg)
 
 ## Sample Programs
 
@@ -712,17 +712,17 @@ Two SQL scripts demonstrate the routines:
 
 - `programme_principal1.sql` – computes total fees for account `270` in 2025 and invokes the overdraft check procedure.
   
-  ![Program 1](pictures/Program_1.jpg)
+  ![Program 1](stage%204/pictures/Program_1.jpg)
 - `programme_principal2.sql` – showcases cursor usage (requires a function `get_transactions_by_status`).
   
-  ![Program 2](pictures/Program_2.jpg)
+  ![Program 2](stage%204/pictures/Program_2.jpg)
 
 Additional screenshots show query results:
 
-![select total fees](pictures/select_total_fees.jpg)
-![select active restrictions](pictures/select_active_restrictions.jpg)
-![call overdraft 2](pictures/call_check&block_aacount_if_overdraft_2.jpg)
-![trigger transaction update](pictures/Trigger_Transaction_update.jpg)
+![select total fees](stage%204/pictures/select_total_fees.jpg)
+![select active restrictions](stage%204/pictures/select_active_restrictions.jpg)
+![call overdraft 2](stage%204/pictures/call_check&block_aacount_if_overdraft_2.jpg)
+![trigger transaction update](stage%204/pictures/Trigger_Transaction_update.jpg)
 
 ---
 
