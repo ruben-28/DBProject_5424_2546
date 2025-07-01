@@ -30,7 +30,9 @@ if not st.session_state.logged_in:
     if st.button("Se connecter"):
         if USERS.get(u) == p:
             st.session_state.logged_in = True
-            st.experimental_rerun()
+            # Streamlit automatically reruns the script when a widget triggers
+            # an interaction, so there is no need to call ``st.experimental_rerun``
+            # which might not be available on older Streamlit versions.
         else:
             st.error("Identifiants invalides")
     st.stop()
