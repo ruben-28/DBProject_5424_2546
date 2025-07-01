@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
+
 from stage5 import Transaction, Transfer, Check, Account, Session
+
 
 st.set_page_config(
     page_title="Gestion Transactions",
