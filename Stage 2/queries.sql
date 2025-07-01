@@ -7,9 +7,9 @@ SELECT
 FROM
     "Transaction" t
 JOIN
-    "Transfer" tr ON t.transaction_id = tr.transaction_id
+    Transfer tr ON t.transaction_id = tr.transaction_id
 JOIN
-    "TransactionType" tt ON t.transaction_type = tt.type_id
+    "transaction_type" tt ON t.transaction_type = tt.type_id
 GROUP BY
     tt.type_name,
     TO_CHAR(t.transaction_date::DATE, 'YYYY-MM')
