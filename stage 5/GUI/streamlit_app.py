@@ -4,6 +4,23 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from stage5 import Transaction, Transfer, Check, Session
 
+st.set_page_config(
+    page_title="Gestion Transactions",
+    page_icon="🏦",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.markdown(
+    """
+    <style>
+    .stButton>button {border-radius:5px;}
+    .stTextInput>div>div>input {border-radius:5px;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # --- PARAMÈTRES D'AUTHENTIFICATION ---
 VALID_USERNAME = "ruben"
 VALID_PASSWORD = "2810"
@@ -14,18 +31,21 @@ if 'logged_in' not in st.session_state:
 
 # Écran de connexion
 if not st.session_state['logged_in']:
-    st.title("🔐 Connexion requise")
-    username = st.text_input("Nom d'utilisateur")
-    password = st.text_input("Mot de passe", type="password")
-    if st.button("Se connecter"):
-        if username == VALID_USERNAME and password == VALID_PASSWORD:
-            st.session_state['logged_in'] = True
-        else:
-            st.error("Identifiants invalides")
+    st.markdown("<h2 style='text-align:center'>🔐 Connexion requise</h2>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        with st.form("login_form"):
+            username = st.text_input("Nom d'utilisateur")
+            password = st.text_input("Mot de passe", type="password")
+            if st.form_submit_button("Se connecter"):
+                if username == VALID_USERNAME and password == VALID_PASSWORD:
+                    st.session_state['logged_in'] = True
+                else:
+                    st.error("Identifiants invalides")
     st.stop()  # arrête l'exécution tant que l'utilisateur n'est pas connecté
 
 # Configuration de la page (après authentification)
-st.set_page_config(page_title="Gestion Transactions", layout="wide")
+st.title("🏦 Gestion des Transactions")
 tab_crud, tab_reports = st.tabs(["CRUD", "Rapports"])
 
 
