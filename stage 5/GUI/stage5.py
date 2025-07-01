@@ -19,7 +19,7 @@ Session = sessionmaker(bind=engine)
 
 # 3) Modèles ORM
 class Transaction(Base):
-    _tablename_ = "Transaction"
+    __tablename__ = "Transaction"
     transaction_id = Column(
         Integer,
         Sequence('transaction_id_seq'),
@@ -37,7 +37,7 @@ class Transaction(Base):
 
 
 class Transfer(Base):
-    _tablename_ = "transfer"
+    __tablename__ = "transfer"
     transfer_id         = Column(
         Integer,
         Sequence('transfer_id_seq'),
@@ -53,7 +53,7 @@ class Transfer(Base):
 
 
 class Check(Base):
-    _tablename_ = "checks"
+    __tablename__ = "checks"
     checks_id       = Column(
         Integer,
         Sequence('checks_id_seq'),
@@ -69,7 +69,7 @@ class Check(Base):
 
 
 class Account(Base):
-    _tablename_ = "account"
+    __tablename__ = "account"
     account_id      = Column(
         Integer,
         Sequence('account_id_seq'),
@@ -89,6 +89,6 @@ class Account(Base):
 
 
 # 4) Créer les tables si on lance ce script directement
-if _name_ == "_main_":
+if __name__ == "__main__":
     Base.metadata.create_all(engine)
     print("Tables créées.")
