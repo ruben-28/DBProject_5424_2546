@@ -30,7 +30,8 @@ if not st.session_state.logged_in:
     if st.button("Se connecter"):
         if USERS.get(u) == p:
             st.session_state.logged_in = True
-            st.experimental_rerun()
+
+ main
         else:
             st.error("Identifiants invalides")
     st.stop()
