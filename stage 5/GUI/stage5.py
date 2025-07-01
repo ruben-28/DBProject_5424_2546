@@ -79,8 +79,11 @@ class Account(Base):
     customer_id     = Column(String(20), nullable=False)
     account_num     = Column(String(30), unique=True, nullable=False)
     opening_date    = Column(Date)
+
     # Database column is named "current_balan" (typo). Map attribute accordingly.
     current_balance = Column("current_balan", Numeric(14, 2))
+
+
     status          = Column(String(10))
     account_type    = Column(String(20))
 
