@@ -19,7 +19,7 @@ Session = sessionmaker(bind=engine)
 
 # 3) Modèles ORM
 class Transaction(Base):
-    __tablename__ = "Transaction"
+    _tablename_ = "Transaction"
     transaction_id = Column(
         Integer,
         Sequence('transaction_id_seq'),
@@ -37,7 +37,7 @@ class Transaction(Base):
 
 
 class Transfer(Base):
-    __tablename__ = "transfer"
+    _tablename_ = "transfer"
     transfer_id         = Column(
         Integer,
         Sequence('transfer_id_seq'),
@@ -53,7 +53,7 @@ class Transfer(Base):
 
 
 class Check(Base):
-    __tablename__ = "checks"
+    _tablename_ = "checks"
     checks_id       = Column(
         Integer,
         Sequence('checks_id_seq'),
@@ -69,43 +69,7 @@ class Check(Base):
 
 
 class Account(Base):
-    __tablename__ = "account"
-    # allow re-importing the model without raising an InvalidRequestError
-    __table_args__ = {"extend_existing": True}
-    account_id      = Column(
-        Integer,
-        Sequence('account_id_seq'),
-        primary_key=True,
-        server_default=Sequence('account_id_seq').next_value()
-    )
-    customer_id     = Column(String(20), nullable=False)
-    account_num     = Column(String(30), unique=True, nullable=False)
-    opening_date    = Column(Date)
-    # Database column is named "current_balan" (typo). Map attribute accordingly.
-    current_balance = Column("current_balan", Numeric(14, 2))
-    status          = Column(String(10))
-    account_type    = Column(String(20))
-
-
-class Account(Base):
-    __tablename__ = "account"
-
-    account_id      = Column(
-        Integer,
-        Sequence('account_id_seq'),
-        primary_key=True,
-        server_default=Sequence('account_id_seq').next_value()
-    )
-    customer_id     = Column(String(20), nullable=False)
-    account_num     = Column(String(30), unique=True, nullable=False)
-    opening_date    = Column(Date)
-    # Database column is named "current_balan" (typo). Map attribute accordingly.
-    current_balance = Column("current_balan", Numeric(14, 2))
-    status          = Column(String(10))
-    account_type    = Column(String(20))
-
-class Account(Base):
-    __tablename__ = "account"
+    _tablename_ = "account"
     account_id      = Column(
         Integer,
         Sequence('account_id_seq'),
@@ -125,6 +89,6 @@ class Account(Base):
 
 
 # 4) Créer les tables si on lance ce script directement
-if __name__ == "__main__":
+if _name_ == "_main_":
     Base.metadata.create_all(engine)
     print("Tables créées.")
