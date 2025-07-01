@@ -68,6 +68,25 @@ class Check(Base):
     transaction     = relationship("Transaction", back_populates="checks")
 
 
+class Account(Base):
+    __tablename__ = "account"
+    # allow re-importing the model without raising an InvalidRequestError
+    __table_args__ = {"extend_existing": True}
+    account_id      = Column(
+        Integer,
+        Sequence('account_id_seq'),
+        primary_key=True,
+        server_default=Sequence('account_id_seq').next_value()
+    )
+    customer_id     = Column(String(20), nullable=False)
+    account_num     = Column(String(30), unique=True, nullable=False)
+    opening_date    = Column(Date)
+    # Database column is named "current_balan" (typo). Map attribute accordingly.
+    current_balance = Column("current_balan", Numeric(14, 2))
+    status          = Column(String(10))
+    account_type    = Column(String(20))
+
+
 # 4) Créer les tables si on lance ce script directement
 if __name__ == "__main__":
     Base.metadata.create_all(engine)
