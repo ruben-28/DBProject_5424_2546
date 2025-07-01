@@ -1,7 +1,41 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import text
-from stage5 import Transaction, Transfer, Check, Session
+from stage5 import (
+    Transaction,
+    Transfer,
+    Check,
+    Session,
+    add_transaction,
+    add_transfer,
+    add_check,
+    update_transaction,
+    update_transfer,
+    update_check,
+    delete_transaction,
+    delete_transfer,
+    delete_check,
+)
+
+# --- AUTHENTIFICATION -------------------------------------------------------
+USERS = {"admin": "admin"}
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+    st.title("Connexion")
+    u = st.text_input("Utilisateur")
+    p = st.text_input("Mot de passe", type="password")
+    if st.button("Se connecter"):
+        if USERS.get(u) == p:
+            st.session_state.logged_in = True
+            # Streamlit automatically reruns the script when a widget triggers
+            # an interaction, so there is no need to call ``st.experimental_rerun``
+            # which might not be available on older Streamlit versions.
+        else:
+            st.error("Identifiants invalides")
+    st.stop()
 
 # --- CONFIGURATION GÉNÉRALE ---
 st.set_page_config(
@@ -136,7 +170,6 @@ elif page == "🔧 Gestion CRUD":
                 a5 = st.text_input("Description")
                 a6 = st.text_input("Statut")
                 if st.form_submit_button("Ajouter"):
-                    from stage5 import add_transaction
                     add_transaction(a1, a2, a3, a4, a5, a6)
                     st.success("Transaction ajoutée")
             elif table == "Transfer":
@@ -146,7 +179,6 @@ elif page == "🔧 Gestion CRUD":
                 t4 = st.text_input("Référence")
                 t5 = st.date_input("Date de transfert")
                 if st.form_submit_button("Ajouter"):
-                    from stage5 import add_transfer
                     add_transfer(t1, t2, t3, t4, t5)
                     st.success("Transfer ajouté")
             else:  # Check
@@ -156,9 +188,41 @@ elif page == "🔧 Gestion CRUD":
                 c4 = st.date_input("Date d'émission")
                 c5 = st.date_input("Date d'encaissement")
                 if st.form_submit_button("Ajouter"):
-                    from stage5 import add_check
                     add_check(c1, c2, c3, c4, c5)
                     st.success("Check ajouté")
+
+    st.markdown("---")
+    st.subheader(f"Mettre à jour un {table}")
+    with st.form(f"form_up_{table}", clear_on_submit=True):
+        uid = st.number_input("ID", step=1, min_value=1)
+        if table == "Transaction":
+            f1 = st.number_input("Montant", format="%.2f")
+            f2 = st.text_input("Statut")
+            if st.form_submit_button("Mettre à jour"):
+                update_transaction(uid, amount=f1, status=f2)
+                st.success("Mis à jour")
+        elif table == "Transfer":
+            f1 = st.text_input("Référence")
+            if st.form_submit_button("Mettre à jour"):
+                update_transfer(uid, transfer_reference=f1)
+                st.success("Mis à jour")
+        else:
+            f1 = st.text_input("Bénéficiaire")
+            if st.form_submit_button("Mettre à jour"):
+                update_check(uid, payee_name=f1)
+                st.success("Mis à jour")
+
+    st.subheader(f"Supprimer un {table}")
+    with st.form(f"form_del_{table}", clear_on_submit=True):
+        did = st.number_input("ID à supprimer", step=1, min_value=1)
+        if st.form_submit_button("Supprimer"):
+            if table == "Transaction":
+                delete_transaction(did)
+            elif table == "Transfer":
+                delete_transfer(did)
+            else:
+                delete_check(did)
+            st.success("Supprimé")
 
 # --- PAGE: Rapports ---
 elif page == "📈 Rapports":
