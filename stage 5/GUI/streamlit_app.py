@@ -1,8 +1,14 @@
+
+
+
+
 import streamlit as st
 import pandas as pd
-from sqlalchemy import text, func
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
+
 from stage5 import Transaction, Transfer, Check, Account, Session
+
 
 st.set_page_config(
     page_title="Gestion Transactions",
@@ -16,7 +22,6 @@ st.markdown(
     <style>
     .stButton>button {border-radius:5px;}
     .stTextInput>div>div>input {border-radius:5px;}
-    .login-container {background-color: #fff;padding: 2rem 3rem;border-radius: 8px;box-shadow: 0 0 10px rgba(0,0,0,0.05);}
     </style>
     """,
     unsafe_allow_html=True,
@@ -26,16 +31,18 @@ st.markdown(
 VALID_USERNAME = "ruben"
 VALID_PASSWORD = "2810"
 
+
+
 # Initialisation de l'état de session
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
-# Écran de connexion
+
+
 if not st.session_state['logged_in']:
     st.markdown("<h2 style='text-align:center'>🔐 Connexion requise</h2>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<div class='login-container'>", unsafe_allow_html=True)
         with st.form("login_form"):
             username = st.text_input("Nom d'utilisateur")
             password = st.text_input("Mot de passe", type="password")
@@ -44,34 +51,10 @@ if not st.session_state['logged_in']:
                     st.session_state['logged_in'] = True
                 else:
                     st.error("Identifiants invalides")
-        st.markdown("</div>", unsafe_allow_html=True)
     st.stop()  # arrête l'exécution tant que l'utilisateur n'est pas connecté
 
 # Configuration de la page (après authentification)
 st.title("🏦 Gestion des Transactions")
-
-# Dashboard avec quelques statistiques rapides
-def get_dashboard_metrics():
-    with Session() as session:
-        return {
-            "transactions": session.query(func.count(Transaction.transaction_id)).scalar() or 0,
-            "transfers": session.query(func.count(Transfer.transfer_id)).scalar() or 0,
-            "checks": session.query(func.count(Check.checks_id)).scalar() or 0,
-            "accounts": session.query(func.count(Account.account_id)).scalar() or 0,
-            "total_balance": session.query(func.coalesce(func.sum(Account.current_balance), 0)).scalar() or 0,
-        }
-
-st.subheader("Tableau de bord")
-metrics = get_dashboard_metrics()
-with st.container():
-    c1, c2, c3, c4, c5 = st.columns(5)
-    c1.metric("Comptes", metrics["accounts"])
-    c2.metric("Transactions", metrics["transactions"])
-    c3.metric("Transfers", metrics["transfers"])
-    c4.metric("Checks", metrics["checks"])
-    c5.metric("Solde total", f"{metrics['total_balance']:.2f}")
-st.write("---")
-
 tab_crud, tab_reports = st.tabs(["CRUD", "Rapports"])
 
 
@@ -81,6 +64,9 @@ with tab_crud:
         "Sélectionner la table",
         ["Transaction", "Transfer", "Check", "Account"]
     )
+
+
+
     key = table if table == "Transaction" else table.lower()
     st.header(f"Gérer les {table}s")
 
@@ -120,6 +106,62 @@ with tab_crud:
                     "issue_date":      r.issue_date,
                     "clearance_date":  r.clearance_date
                 } for r in rows])
+
+            elif table_name == "account":
+                rows = session.query(Account).all()
+                return pd.DataFrame([
+                    {
+                        "account_id":      r.account_id,
+                        "customer_id":     r.customer_id,
+                        "account_num":     r.account_num,
+                        "opening_date":    r.opening_date,
+                        "current_balance": float(r.current_balance) if r.current_balance is not None else None,
+                        "status":          r.status,
+                        "account_type":    r.account_type
+                    } for r in rows
+                ])
+
+            elif table_name == "account":
+                rows = session.query(Account).all()
+                return pd.DataFrame([
+                    {
+                        "account_id":      r.account_id,
+                        "customer_id":     r.customer_id,
+                        "account_num":     r.account_num,
+                        "opening_date":    r.opening_date,
+                        "current_balance": float(r.current_balance) if r.current_balance is not None else None,
+                        "status":          r.status,
+                        "account_type":    r.account_type
+                    } for r in rows
+                ])
+
+            elif table_name == "account":
+                rows = session.query(Account).all()
+                return pd.DataFrame([
+                    {
+                        "account_id":      r.account_id,
+                        "customer_id":     r.customer_id,
+                        "account_num":     r.account_num,
+                        "opening_date":    r.opening_date,
+                        "current_balance": float(r.current_balance) if r.current_balance is not None else None,
+                        "status":          r.status,
+                        "account_type":    r.account_type
+                    } for r in rows
+                ])
+
+            elif table_name == "account":
+                rows = session.query(Account).all()
+                return pd.DataFrame([
+                    {
+                        "account_id":      r.account_id,
+                        "customer_id":     r.customer_id,
+                        "account_num":     r.account_num,
+                        "opening_date":    r.opening_date,
+                        "current_balance": float(r.current_balance) if r.current_balance is not None else None,
+                        "status":          r.status,
+                        "account_type":    r.account_type
+                    } for r in rows
+                ])
 
             elif table_name == "account":
                 rows = session.query(Account).all()
@@ -353,6 +395,210 @@ with tab_crud:
                 session.rollback()
                 st.error("Suppression impossible : contraintes FK")
 
+    def add_account(customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            try:
+                acc = Account(
+                    customer_id=customer_id,
+                    account_num=account_num,
+                    opening_date=opening_date,
+                    current_balance=current_balance,
+                    status=status,
+                    account_type=account_type
+                )
+                session.add(acc)
+                session.commit()
+                st.success("Account ajouté")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur ajout Account : {e}")
+
+    def update_account(acc_id, customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                acc.customer_id     = customer_id
+                acc.account_num     = account_num
+                acc.opening_date    = opening_date
+                acc.current_balance = current_balance
+                acc.status          = status
+                acc.account_type    = account_type
+                session.commit()
+                st.success("Account mise à jour")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur mise à jour Account : {e}")
+
+    def delete_account(acc_id):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                session.delete(acc)
+                session.commit()
+                st.success("Account supprimé")
+            except IntegrityError:
+                session.rollback()
+                st.error("Suppression impossible : contraintes FK")
+
+    def add_account(customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            try:
+                acc = Account(
+                    customer_id=customer_id,
+                    account_num=account_num,
+                    opening_date=opening_date,
+                    current_balance=current_balance,
+                    status=status,
+                    account_type=account_type
+                )
+                session.add(acc)
+                session.commit()
+                st.success("Account ajouté")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur ajout Account : {e}")
+
+    def update_account(acc_id, customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                acc.customer_id     = customer_id
+                acc.account_num     = account_num
+                acc.opening_date    = opening_date
+                acc.current_balance = current_balance
+                acc.status          = status
+                acc.account_type    = account_type
+                session.commit()
+                st.success("Account mise à jour")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur mise à jour Account : {e}")
+
+    def delete_account(acc_id):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                session.delete(acc)
+                session.commit()
+                st.success("Account supprimé")
+            except IntegrityError:
+                session.rollback()
+                st.error("Suppression impossible : contraintes FK")
+
+    def add_account(customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            try:
+                acc = Account(
+                    customer_id=customer_id,
+                    account_num=account_num,
+                    opening_date=opening_date,
+                    current_balance=current_balance,
+                    status=status,
+                    account_type=account_type
+                )
+                session.add(acc)
+                session.commit()
+                st.success("Account ajouté")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur ajout Account : {e}")
+
+    def update_account(acc_id, customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                acc.customer_id     = customer_id
+                acc.account_num     = account_num
+                acc.opening_date    = opening_date
+                acc.current_balance = current_balance
+                acc.status          = status
+                acc.account_type    = account_type
+                session.commit()
+                st.success("Account mise à jour")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur mise à jour Account : {e}")
+
+    def delete_account(acc_id):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                session.delete(acc)
+                session.commit()
+                st.success("Account supprimé")
+            except IntegrityError:
+                session.rollback()
+                st.error("Suppression impossible : contraintes FK")
+
+    def add_account(customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            try:
+                acc = Account(
+                    customer_id=customer_id,
+                    account_num=account_num,
+                    opening_date=opening_date,
+                    current_balance=current_balance,
+                    status=status,
+                    account_type=account_type
+                )
+                session.add(acc)
+                session.commit()
+                st.success("Account ajouté")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur ajout Account : {e}")
+
+    def update_account(acc_id, customer_id, account_num, opening_date, current_balance, status, account_type):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                acc.customer_id     = customer_id
+                acc.account_num     = account_num
+                acc.opening_date    = opening_date
+                acc.current_balance = current_balance
+                acc.status          = status
+                acc.account_type    = account_type
+                session.commit()
+                st.success("Account mise à jour")
+            except Exception as e:
+                session.rollback()
+                st.error(f"Erreur mise à jour Account : {e}")
+
+    def delete_account(acc_id):
+        with Session() as session:
+            acc = session.get(Account, int(acc_id))
+            if not acc:
+                st.error("Account non trouvé")
+                return
+            try:
+                session.delete(acc)
+                session.commit()
+                st.success("Account supprimé")
+            except IntegrityError:
+                session.rollback()
+                st.error("Suppression impossible : contraintes FK")
+
     # Formulaires CRUD
     if table == "Transaction":
         with st.expander("➕ Ajouter Transaction"):
@@ -412,15 +658,16 @@ with tab_crud:
 
     elif table == "Account":
         with st.expander("➕ Ajouter Account"):
-            with st.form("add_acc_form"):
-                customer_id     = st.text_input("Customer ID")
-                account_num     = st.text_input("Account Number")
-                opening_date    = st.date_input("Opening Date")
-                current_balance = st.number_input("Current Balance", format="%.2f")
-                status          = st.text_input("Status")
-                account_type    = st.text_input("Account Type")
-                if st.form_submit_button("Ajouter Account"):
-                    add_account(customer_id, account_num, opening_date, current_balance, status, account_type)
+            data = {
+                'customer_id':     st.text_input("Customer ID"),
+                'account_num':     st.text_input("Account Number"),
+                'opening_date':    st.date_input("Opening Date"),
+                'current_balance': st.number_input("Current Balance", format="%.2f"),
+                'status':          st.text_input("Status"),
+                'account_type':    st.text_input("Account Type")
+            }
+            if st.button("Ajouter Account"):
+                add_account(**data)
 
         with st.expander("✏ Mettre à jour Account"):
             with st.form("update_acc_form"):
@@ -440,15 +687,19 @@ with tab_crud:
                 delete_account(acc_id_del)
 
     else:  # Check
+
+
         with st.expander("➕ Ajouter Check"):
-            with st.form("add_chk_form"):
-                transaction_id = st.number_input("Transaction ID", min_value=1)
-                check_number   = st.text_input("Check Number")
-                payee_name     = st.text_input("Payee Name")
-                issue_date     = st.date_input("Issue Date")
-                clearance_date = st.date_input("Clearance Date")
-                if st.form_submit_button("Ajouter Check"):
-                    add_check(transaction_id, check_number, payee_name, issue_date, clearance_date)
+            data = {
+                'transaction_id': st.number_input("Transaction ID", min_value=1),
+                'check_number':   st.text_input("Check Number"),
+                'payee_name':     st.text_input("Payee Name"),
+                'issue_date':     st.date_input("Issue Date"),
+                'clearance_date': st.date_input("Clearance Date")
+            }
+            if st.button("Ajouter Check"):
+                add_check(**data)
+
 
         with st.expander("✏️ Mettre à jour Check"):
             with st.form("update_chk_form"):
