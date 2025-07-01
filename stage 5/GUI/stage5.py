@@ -70,6 +70,7 @@ class Check(Base):
 
 class Account(Base):
     __tablename__ = "account"
+
     account_id      = Column(
         Integer,
         Sequence('account_id_seq'),
@@ -83,7 +84,6 @@ class Account(Base):
     current_balance = Column("current_balan", Numeric(14, 2))
     status          = Column(String(10))
     account_type    = Column(String(20))
-
 
 class Account(Base):
     __tablename__ = "account"
