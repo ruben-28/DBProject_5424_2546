@@ -3,7 +3,7 @@ from sqlalchemy import (
     create_engine, Column, Integer, String, Date, Numeric, ForeignKey
 )
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
-from sqlalchemy import Sequence
+from sqlalchemy import Sequence, text
 
 # 1) Chaîne de connexion (à adapter)
 DB_USER = "ruben"
@@ -73,6 +73,50 @@ class Check(Base):
     issue_date = Column(Date, nullable=False)
     clearance_date = Column(Date)
     transaction = relationship("Transaction", back_populates="checks")
+
+
+# -------------------------------
+# Helper query functions (Stage 2)
+# -------------------------------
+
+def query_high_value_transfers(min_amount=1_000_000):
+    """Return transfers where the linked transaction amount exceeds min_amount."""
+    with Session() as session:
+        result = session.execute(
+            text(
+                """
+                SELECT t.transaction_id,
+                       t.amount,
+                       tr.from_account_id_fk,
+                       tr.to_account_id_fk,
+                       t.transaction_date
+                FROM "Transaction" t
+                JOIN transfer tr ON t.transaction_id = tr.transaction_id
+                WHERE t.amount > :amount
+                ORDER BY t.amount DESC
+                """
+            ),
+            {"amount": min_amount},
+        )
+        return [dict(row) for row in result]
+
+
+def query_monthly_status_counts():
+    """Return count of transactions per status and month."""
+    with Session() as session:
+        result = session.execute(
+            text(
+                """
+                SELECT t.status,
+                       TO_CHAR(t.transaction_date::DATE, 'YYYY-MM') AS year_month,
+                       COUNT(*) AS transaction_count
+                FROM "Transaction" t
+                GROUP BY t.status, TO_CHAR(t.transaction_date::DATE, 'YYYY-MM')
+                ORDER BY transaction_count DESC
+                """
+            )
+        )
+        return [dict(row) for row in result]
 
 
 # 4) (Optionnel) créer les tables en base

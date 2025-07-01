@@ -3,7 +3,14 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from stage5 import Transaction, Transfer, Check, Session
+from stage5 import (
+    Transaction,
+    Transfer,
+    Check,
+    Session,
+    query_high_value_transfers,
+    query_monthly_status_counts,
+)
 
 st.set_page_config(page_title="Gestion Transactions", layout="wide")
 
@@ -64,6 +71,35 @@ if df.empty:
     st.write("Aucune donnée à afficher.")
 else:
     st.dataframe(df)
+
+# ---------------------------
+# Section requêtes personnalisées
+# ---------------------------
+
+st.sidebar.markdown("---")
+query_choice = st.sidebar.selectbox(
+    "Exécuter une requête",
+    (
+        "Aucune",
+        "Transactions > 1 000 000",
+        "Comptage mensuel par statut",
+    ),
+)
+
+if query_choice == "Transactions > 1 000 000":
+    st.subheader("Transactions dépassant 1 000 000")
+    rows = query_high_value_transfers()
+    if rows:
+        st.dataframe(pd.DataFrame(rows))
+    else:
+        st.info("Aucun résultat")
+elif query_choice == "Comptage mensuel par statut":
+    st.subheader("Nombre de transactions par statut et par mois")
+    rows = query_monthly_status_counts()
+    if rows:
+        st.dataframe(pd.DataFrame(rows))
+    else:
+        st.info("Aucun résultat")
 
 
 # Fonctions CRUD
