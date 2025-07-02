@@ -36,57 +36,49 @@ $$;
 -- Procédure : check_and_block_account_if_overdraft
 -- ====================================
 
-CREATE OR REPLACE PROCEDURE check_and_block_account_if_overdraft(
-    acc_id INT,
+CREATE OR REPLACE PROCEDURE check_and_block_overdrafts(
     seuil_negatif NUMERIC
 )
 LANGUAGE plpgsql
 AS $$
 DECLARE
-    solde NUMERIC;
+    rec RECORD;         -- contiendra chaque compte (id + solde)
 BEGIN
-    -- Vérifier que le compte existe
-    IF NOT EXISTS (
-        SELECT 1 FROM "account" WHERE "account_id" = acc_id
-    ) THEN
-        RAISE EXCEPTION 'Le compte % n''existe pas.', acc_id;
-    END IF;
+    -- Parcourir tous les comptes
+    FOR rec IN
+        SELECT account_id, current_balan
+        FROM "account"
+    LOOP
+        -- Si le solde du compte est en dessous du seuil
+        IF rec.current_balan < seuil_negatif THEN
 
-    -- Récupérer le solde actuel
-    SELECT "current_balan"
-    INTO solde
-    FROM "account"
-    WHERE "account_id" = acc_id;
+            -- Mettre à jour le statut du compte
+            UPDATE "account"
+            SET "status" = 'blocked'
+            WHERE "account_id" = rec.account_id;
 
-    -- Si le solde est en dessous du seuil, bloquer le compte
-    IF solde < seuil_negatif THEN
+            -- Insérer une restriction dans accountrestriction
+            INSERT INTO "accountrestriction" (
+                "account_id",
+                "restriction_type",
+                "start_date",
+                "reason"
+            ) VALUES (
+                rec.account_id,
+                'Full',
+                CURRENT_DATE,
+                'Solde insuffisant (en dessous de ' || seuil_negatif || ')'
+            );
 
-        -- Mettre à jour le statut du compte
-        UPDATE "account"
-        SET "status" = 'blocked'
-        WHERE "account_id" = acc_id;
-
-        -- Ajouter une restriction complète
-        INSERT INTO "accountrestriction" (
-            "account_id",
-            "restriction_type",
-            "start_date",
-            "reason"
-        ) VALUES (
-            acc_id,
-            'Full',
-            CURRENT_DATE,
-            'Solde insuffisant (en dessous de ' || seuil_negatif || ')'
-        );
-
-        RAISE NOTICE 'Compte % bloqué pour dépassement de découvert.', acc_id;
-
-    ELSE
-        RAISE NOTICE 'Aucune action nécessaire. Solde actuel : %', solde;
-    END IF;
+            RAISE NOTICE 'Compte % bloqué : solde % < seuil %',
+                         rec.account_id, rec.current_balan, seuil_negatif;
+        ELSE
+            RAISE NOTICE 'Compte % OK (solde %)', rec.account_id, rec.current_balan;
+        END IF;
+    END LOOP;
 
 EXCEPTION
     WHEN OTHERS THEN
-        RAISE EXCEPTION 'Erreur dans check_and_block_account_if_overdraft : %', SQLERRM;
+        RAISE EXCEPTION 'Erreur dans check_and_block_overdrafts : %', SQLERRM;
 END;
 $$;
