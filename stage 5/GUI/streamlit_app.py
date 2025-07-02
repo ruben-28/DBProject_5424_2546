@@ -1,8 +1,10 @@
+from xmlrpc.client import DateTime
+
 import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-
+from datetime import datetime, date
 from stage5 import Transaction, Transfer, Check, Account, Session
 
 
@@ -172,6 +174,21 @@ with tab_crud:
             except Exception as e:
                 session.rollback()
                 st.error(f"⚠ Erreur mise à jour Transaction : {e}")
+
+
+    def get_transaction_by_id(tx_id):
+        with Session() as session:
+            tx = session.get(Transaction, tx_id)
+            if tx:
+                return {
+                    'account_id': tx.account_id_FK,
+                    'type_id': tx.transaction_type,
+                    'date': tx.transaction_date,
+                    'amount': float(tx.amount),
+                    'description': tx.description or "",
+                    'status': tx.status or ""
+                }
+        return None
 
     def delete_transaction(tx_id):
         with Session() as session:
@@ -411,17 +428,45 @@ with tab_crud:
                 add_transaction(**data)
 
         with st.expander("✏ Mettre à jour Transaction"):
-            with st.form("update_tx_form"):
-                tx_id       = st.number_input("Transaction ID", min_value=1, key="update_tx_id")
-                account_id  = st.number_input("Account ID",       min_value=1, key="update_account_id")
-                type_id     = st.number_input("Type ID",          min_value=1, key="update_type_id")
-                date        = st.date_input("Date",               key="update_date")
-                amount      = st.number_input("Montant",          min_value=0.0, format="%.2f", key="update_amount")
-                description = st.text_input("Description",       key="update_description")
-                status      = st.text_input("Statut",            key="update_status")
-                if st.form_submit_button("Mettre à jour"):
-                    update_transaction(tx_id, account_id, type_id, date, amount, description, status)
+            # Étape 1: Saisir l'ID pour charger les données
+            tx_id_to_load = st.number_input("Entrez l'ID de la Transaction à modifier", min_value=1, key="load_tx_id")
 
+            # Initialiser les valeurs par défaut
+            default_values = {
+                'account_id': 1,
+                'type_id': 1,
+                'date': datetime.now().date(),
+                'amount': 0.0,
+                'description': "",
+                'status': ""
+            }
+
+            # Charger les données si l'ID est fourni
+            if tx_id_to_load:
+                tx_data = get_transaction_by_id(tx_id_to_load)
+                if tx_data:
+                    default_values.update(tx_data)
+                    st.success(f"✅ Données chargées pour la Transaction ID: {tx_id_to_load}")
+                else:
+                    st.warning(f"⚠ Aucune transaction trouvée avec l'ID: {tx_id_to_load}")
+
+            # Formulaire avec valeurs pré-remplies
+            with st.form("update_tx_form"):
+                account_id = st.number_input("Account ID", min_value=1, value=default_values['account_id'],
+                                             key="update_account_id")
+                type_id = st.number_input("Type ID", min_value=1, value=default_values['type_id'], key="update_type_id")
+                date = st.date_input("Date", value=default_values['date'], key="update_date")
+                amount = st.number_input("Montant", min_value=0.0, format="%.2f", value=default_values['amount'],
+                                         key="update_amount")
+                description = st.text_input("Description", value=default_values['description'],
+                                            key="update_description")
+                status = st.text_input("Statut", value=default_values['status'], key="update_status")
+
+                if st.form_submit_button("Mettre à jour"):
+                    if tx_id_to_load:
+                        update_transaction(tx_id_to_load, account_id, type_id, date, amount, description, status)
+                    else:
+                        st.error("Veuillez d'abord entrer un ID de transaction valide")
         with st.expander("🗑 Supprimer Transaction"):
             tx_id_del = st.number_input("Transaction ID à supprimer", min_value=1, key="del_tx_id")
             if st.button("Supprimer"):
