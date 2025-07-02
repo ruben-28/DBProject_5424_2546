@@ -562,11 +562,11 @@ with tab_reports:
             session.execute(text("CALL update_inactive_accounts()"))
             session.commit()
 
-    def run_check_and_block(acc_id, threshold):
+    def run_check_and_block( threshold):
         with Session() as session:
             session.execute(
-                text("CALL check_and_block_account_if_overdraft(:acc_id, :threshold)"),
-                {"acc_id": acc_id, "threshold": threshold}
+                text("CALL check_and_block_overdrafts( :threshold)"),
+                { "threshold": threshold}
             )
             session.commit()
 
@@ -591,8 +591,8 @@ with tab_reports:
             st.success("Procédure update_inactive_accounts exécutée")
 
     with st.expander("⛔ Vérifier et bloquer si découvert"):
-        acc_id = st.number_input("Account ID", min_value=1, step=1)
+
         thresh = st.number_input("Seuil négatif", value=-100.00, format="%.2f")
         if st.button("Exécuter check_and_block_account_if_overdraft"):
-            run_check_and_block(acc_id, thresh)
-            st.success(f"Procédure check_and_block_account_if_overdraft exécutée pour compte {acc_id}")
+            run_check_and_block( thresh)
+            st.success(f"Procédure check_and_block_overdrafts exécutée pour tous comptes (< {thresh})")
