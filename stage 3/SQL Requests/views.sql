@@ -7,16 +7,19 @@
 -- ============================================================
 CREATE OR REPLACE VIEW TransactionOverviewView AS
 SELECT 
-    t.transaction_id,
-    t.transaction_date,
-    t.amount,
-    t.status,
-    tt.type_name,
-    a.account_num,
-    a.customer_id
-FROM "Transaction" t
-JOIN "transaction_type" tt ON t.transaction_type = tt.type_id
-JOIN Account a ON t."account_id_FK" = a.account_id;
+    t."transaction_id",
+    t."transaction_date",
+    t."amount",
+    t."status",
+    tt."type_name",
+    a."account_num",
+    a."customer_id"
+FROM "Transaction" AS t
+-- on caste transaction_type en integer pour qu’il matche tt.type_id
+JOIN "transaction_type" AS tt
+  ON (t."transaction_type"::integer = tt."type_id")
+JOIN Account AS a
+  ON (t."account_id_FK" = a."account_id");
 -- ============================================================
 -- 🔍 Vue 2 : AccountSummaryView
 -- Description : Vue listant les comptes avec leurs activités bancaires
