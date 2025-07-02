@@ -26,7 +26,7 @@ SELECT
 FROM
     "Transaction" t
 JOIN
-    "Transfer" tr ON t.transaction_id = tr.transaction_id
+    Transfer tr ON t.transaction_id = tr.transaction_id
 WHERE
     t.amount > 1000000
 ORDER BY
