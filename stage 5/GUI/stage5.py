@@ -26,14 +26,21 @@ class Transaction(Base):
         primary_key=True,
         server_default=Sequence('transaction_id_seq').next_value()
     )
-    account_id_FK    = Column(Integer, nullable=False)
+
+    account_id_FK = Column(
+        Integer,
+        ForeignKey("account.account_id", ondelete="CASCADE"),
+        nullable=False
+    )
     transaction_type = Column(Integer, nullable=False)
     transaction_date = Column(Date,    nullable=False)
     amount           = Column(Numeric(12, 2), nullable=False)
     description      = Column(String(255))
     status           = Column(String(50))
-    transfers        = relationship("Transfer", back_populates="transaction")
-    checks           = relationship("Check",    back_populates="transaction")
+    transfers        = relationship("Transfer", back_populates="transaction",cascade="all, delete-orphan",
+        passive_deletes=True)
+    checks           = relationship("Check",    back_populates="transaction",cascade="all, delete-orphan",
+        passive_deletes=True)
 
 
 class Transfer(Base):
@@ -44,9 +51,18 @@ class Transfer(Base):
         primary_key=True,
         server_default=Sequence('transfer_id_seq').next_value()
     )
+
     transaction_id      = Column(Integer, ForeignKey("Transaction.transaction_id"), nullable=False)
-    from_account_id_fk  = Column(Integer, nullable=False)
-    to_account_id_fk    = Column(Integer, nullable=False)
+    from_account_id_fk = Column(
+        Integer,
+        ForeignKey("account.account_id", ondelete="CASCADE"),
+        nullable=False
+    )
+    to_account_id_fk   = Column(
+        Integer,
+        ForeignKey("account.account_id", ondelete="CASCADE"),
+        nullable=False
+    )
     transfer_reference  = Column(String(100))
     transfer_date       = Column(Date, nullable=False)
     transaction         = relationship("Transaction", back_populates="transfers")
