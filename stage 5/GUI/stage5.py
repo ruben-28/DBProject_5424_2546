@@ -56,9 +56,9 @@ class Check(Base):
     __tablename__ = "checks"
     checks_id       = Column(
         Integer,
-        Sequence('checks_id_seq'),
+        Sequence('check_id_seq'),
         primary_key=True,
-        server_default=Sequence('checks_id_seq').next_value()
+        server_default=Sequence('check_id_seq').next_value()
     )
     transaction_id  = Column(Integer, ForeignKey("Transaction.transaction_id"), nullable=False)
     checks_number   = Column(String(50))
@@ -72,9 +72,9 @@ class Account(Base):
     __tablename__ = "account"
     account_id      = Column(
         Integer,
-        Sequence('account_id_seq'),
+        Sequence('account_account_id_seq'),
         primary_key=True,
-        server_default=Sequence('account_id_seq').next_value()
+        server_default=Sequence('account_account_id_seq').next_value()
     )
     customer_id     = Column(String(20), nullable=False)
     account_num     = Column(String(30), unique=True, nullable=False)
