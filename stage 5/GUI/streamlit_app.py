@@ -62,7 +62,7 @@ with tab_crud:
     )
 
     key = table if table == "Transaction" else table.lower()
-    st.header(f"Gérer les {table}s")
+
 
     # Récupération des données
     def fetch_data(table_name):
@@ -70,48 +70,48 @@ with tab_crud:
             if table_name == "Transaction":
                 rows = session.query(Transaction).all()
                 return pd.DataFrame([{
-                    "transaction_id":   r.transaction_id,
-                    "account_id":       r.account_id_FK,
-                    "type_id":          r.transaction_type,
+                    "transaction_id": r.transaction_id,
+                    "account_id": r.account_id_FK,
+                    "type_name": r.transaction_type,
                     "transaction_date": r.transaction_date,
-                    "amount":           float(r.amount),
-                    "description":      r.description,
-                    "status":           r.status
+                    "amount": float(r.amount),
+                    "description": r.description,
+                    "status": r.status
                 } for r in rows])
 
             elif table_name == "transfer":
                 rows = session.query(Transfer).all()
                 return pd.DataFrame([{
-                    "transfer_id":     r.transfer_id,
-                    "transaction_id":  r.transaction_id,
-                    "from_account":    r.from_account_id_fk,
-                    "to_account":      r.to_account_id_fk,
-                    "reference":       r.transfer_reference,
-                    "transfer_date":   r.transfer_date
+                    "transfer_id": r.transfer_id,
+                    "transaction_id": r.transaction_id,
+                    "from_account": r.from_account_id_fk,
+                    "to_account": r.to_account_id_fk,
+                    "reference": r.transfer_reference,
+                    "transfer_date": r.transfer_date
                 } for r in rows])
 
             elif table_name == "check":
                 rows = session.query(Check).all()
                 return pd.DataFrame([{
-                    "checks_id":       r.checks_id,
-                    "transaction_id":  r.transaction_id,
-                    "checks_number":   r.checks_number,
-                    "payee_name":      r.payee_name,
-                    "issue_date":      r.issue_date,
-                    "clearance_date":  r.clearance_date
+                    "checks_id": r.checks_id,
+                    "transaction_id": r.transaction_id,
+                    "checks_number": r.checks_number,
+                    "payee_name": r.payee_name,
+                    "issue_date": r.issue_date,
+                    "clearance_date": r.clearance_date
                 } for r in rows])
 
             elif table_name == "account":
                 rows = session.query(Account).all()
                 return pd.DataFrame([
                     {
-                        "account_id":      r.account_id,
-                        "customer_id":     r.customer_id,
-                        "account_num":     r.account_num,
-                        "opening_date":    r.opening_date,
+                        "account_id": r.account_id,
+                        "customer_id": r.customer_id,
+                        "account_num": r.account_num,
+                        "opening_date": r.opening_date,
                         "current_balance": float(r.current_balance) if r.current_balance is not None else None,
-                        "status":          r.status,
-                        "account_type":    r.account_type
+                        "status": r.status,
+                        "account_type": r.account_type
                     } for r in rows
                 ])
 
@@ -119,31 +119,53 @@ with tab_crud:
                 rows = session.query(Account).all()
                 return pd.DataFrame([
                     {
-                        "account_id":      r.account_id,
-                        "customer_id":     r.customer_id,
-                        "account_num":     r.account_num,
-                        "opening_date":    r.opening_date,
+                        "account_id": r.account_id,
+                        "customer_id": r.customer_id,
+                        "account_num": r.account_num,
+                        "opening_date": r.opening_date,
                         "current_balance": float(r.current_balance) if r.current_balance is not None else None,
-                        "status":          r.status,
-                        "account_type":    r.account_type
+                        "status": r.status,
+                        "account_type": r.account_type
                     } for r in rows
                 ])
 
         return pd.DataFrame()
 
-    df = fetch_data(key)
-    if df.empty:
+
+    if 'last_table' not in st.session_state or st.session_state.last_table != key:
+        st.session_state.last_table = key
+        st.session_state.df_crud = fetch_data(key)
+
+    # 1) Initialisation en session (chargement unique au premier tour)
+    if 'df_crud' not in st.session_state:
+        st.session_state.df_crud = fetch_data(key)
+
+    # 2) Bouton “🔄 Rafraîchir” pour recharger à la volée
+    if st.button("🔄 Rafraîchir"):
+        st.session_state.df_crud = fetch_data(key)
+        st.success("Tableau mis à jour")
+
+    # 3) Affichage du DataFrame stocké
+    if st.session_state.df_crud.empty:
         st.write("Aucune donnée à afficher.")
     else:
-        st.dataframe(df)
+        st.dataframe(st.session_state.df_crud)
+    st.header(f"Gérer les {table}s")
+
+
+
+
 
     # Fonctions CRUD
-    def add_transaction(account_id, type_id, date, amount, description, status):
+    def add_transaction(account_id, type_name, date, amount, description, status):
         with Session() as session:
             try:
+                if not status or status.strip() == "":
+                    status = "pending"
+                    st.info("ℹ Statut automatiquement défini à 'pending'")
                 tx = Transaction(
                     account_id_FK=int(account_id),
-                    transaction_type=int(type_id),
+                    transaction_type=int(type_name),
                     transaction_date=date,
                     amount=float(amount),
                     description=description,
@@ -156,7 +178,7 @@ with tab_crud:
                 session.rollback()
                 st.error(f"Erreur ajout Transaction : {e}")
 
-    def update_transaction(tx_id, account_id, type_id, date, amount, description, status):
+    def update_transaction(tx_id, account_id, type_name, date, amount, description, status):
         with Session() as session:
             tx = session.get(Transaction, tx_id)
             if not tx:
@@ -164,7 +186,7 @@ with tab_crud:
                 return
             try:
                 tx.account_id_FK    = account_id
-                tx.transaction_type = type_id
+                tx.transaction_type = type_name
                 tx.transaction_date = date
                 tx.amount           = amount
                 tx.description      = description
@@ -182,7 +204,7 @@ with tab_crud:
             if tx:
                 return {
                     'account_id': tx.account_id_FK,
-                    'type_id': tx.transaction_type,
+                    'type_name': tx.transaction_type,
                     'date': tx.transaction_date,
                     'amount': float(tx.amount),
                     'description': tx.description or "",
@@ -248,6 +270,20 @@ with tab_crud:
                 session.rollback()
                 st.error(f"Erreur mise à jour Transfer : {e}")
 
+
+    def get_transfer_by_id(tr_id):
+        with Session() as session:
+            tr = session.get(Transfer, tr_id)
+            if tr:
+                return {
+                    'transaction_id': tr.transaction_id,
+                    'from_account': tr.from_account_id_fk,
+                    'to_account': tr.to_account_id_fk,
+                    'reference': tr.transfer_reference or "",
+                    'transfer_date': tr.transfer_date
+                }
+        return None
+
     def delete_transfer(tr_id):
         with Session() as session:
             tr = session.get(Transfer, int(tr_id))
@@ -296,6 +332,21 @@ with tab_crud:
             except Exception as e:
                 session.rollback()
                 st.error(f"Erreur mise à jour Check : {e}")
+
+
+    def get_check_by_id(chk_id):
+        with Session() as session:
+            chk = session.get(Check, chk_id)
+            if chk:
+                return {
+                    'transaction_id': chk.transaction_id,
+                    'check_number': chk.checks_number or "",
+                    'payee_name': chk.payee_name or "",
+                    'issue_date': chk.issue_date,
+                    'clearance_date': chk.clearance_date
+                }
+        return None
+
 
     def delete_check(chk_id):
         with Session() as session:
@@ -399,6 +450,21 @@ with tab_crud:
                 session.rollback()
                 st.error(f"Erreur mise à jour Account : {e}")
 
+
+    def get_account_by_id(acc_id):
+        with Session() as session:
+            acc = session.get(Account, acc_id)
+            if acc:
+                return {
+                    'customer_id': acc.customer_id or "",
+                    'account_num': acc.account_num or "",
+                    'opening_date': acc.opening_date,
+                    'current_balance': float(acc.current_balance) if acc.current_balance is not None else 0.0,
+                    'status': acc.status or "",
+                    'account_type': acc.account_type or ""
+                }
+        return None
+
     def delete_account(acc_id):
         with Session() as session:
             acc = session.get(Account, int(acc_id))
@@ -418,7 +484,7 @@ with tab_crud:
         with st.expander("➕ Ajouter Transaction"):
             data = {
                 'account_id':  st.number_input("Account ID", min_value=1),
-                'type_id':     st.number_input("Type ID",    min_value=1),
+                'type_name':     st.text_input("Type Name"),
                 'date':        st.date_input("Date"),
                 'amount':      st.text_input("Amount"),
                 'description': st.text_input("Description"),
@@ -427,14 +493,14 @@ with tab_crud:
             if st.button("Ajouter"):
                 add_transaction(**data)
 
-        with st.expander("✏ Mettre à jour Transaction"):
+        with st.expander("✏️ Mettre à jour Transaction"):
             # Étape 1: Saisir l'ID pour charger les données
             tx_id_to_load = st.number_input("Entrez l'ID de la Transaction à modifier", min_value=1, key="load_tx_id")
 
             # Initialiser les valeurs par défaut
             default_values = {
                 'account_id': 1,
-                'type_id': 1,
+                'type_name': "",
                 'date': datetime.now().date(),
                 'amount': 0.0,
                 'description': "",
@@ -454,7 +520,7 @@ with tab_crud:
             with st.form("update_tx_form"):
                 account_id = st.number_input("Account ID", min_value=1, value=default_values['account_id'],
                                              key="update_account_id")
-                type_id = st.number_input("Type ID", min_value=1, value=default_values['type_id'], key="update_type_id")
+                type_name = st.text_input("Type Name",value=default_values['type_name'],key="update_type_name" )
                 date = st.date_input("Date", value=default_values['date'], key="update_date")
                 amount = st.number_input("Montant", min_value=0.0, format="%.2f", value=default_values['amount'],
                                          key="update_amount")
@@ -464,10 +530,11 @@ with tab_crud:
 
                 if st.form_submit_button("Mettre à jour"):
                     if tx_id_to_load:
-                        update_transaction(tx_id_to_load, account_id, type_id, date, amount, description, status)
+                        update_transaction(tx_id_to_load, account_id, type_name, date, amount, description, status)
                     else:
                         st.error("Veuillez d'abord entrer un ID de transaction valide")
-        with st.expander("🗑 Supprimer Transaction"):
+
+        with st.expander("🗑️ Supprimer Transaction"):
             tx_id_del = st.number_input("Transaction ID à supprimer", min_value=1, key="del_tx_id")
             if st.button("Supprimer"):
                 delete_transaction(tx_id_del)
@@ -484,18 +551,47 @@ with tab_crud:
             if st.button("Ajouter Transfer"):
                 add_transfer(**data)
 
-        with st.expander("✏ Mettre à jour Transfer"):
-            with st.form("update_tr_form"):
-                tr_id          = st.number_input("Transfer ID",      min_value=1, key="upd_tr_id")
-                transaction_id = st.number_input("Transaction ID",   min_value=1, key="upd_tr_tx_id")
-                from_account   = st.number_input("From Account ID",  min_value=1, key="upd_tr_from")
-                to_account     = st.number_input("To Account ID",    min_value=1, key="upd_tr_to")
-                reference      = st.text_input("Reference",         key="upd_tr_ref")
-                transfer_date  = st.date_input("Transfer Date",     key="upd_tr_date")
-                if st.form_submit_button("Mettre à jour Transfer"):
-                    update_transfer(tr_id, transaction_id, from_account, to_account, reference, transfer_date)
+        with st.expander("✏️ Mettre à jour Transfer"):
+            # Étape 1: Saisir l'ID pour charger les données
+            tr_id_to_load = st.number_input("Entrez l'ID du Transfer à modifier", min_value=1, key="load_tr_id")
 
-        with st.expander("🗑 Supprimer Transfer"):
+            # Initialiser les valeurs par défaut
+            default_values = {
+                'transaction_id': 1,
+                'from_account': 1,
+                'to_account': 1,
+                'reference': "",
+                'transfer_date': datetime.now().date()
+            }
+
+            # Charger les données si l'ID est fourni
+            if tr_id_to_load:
+                tr_data = get_transfer_by_id(tr_id_to_load)
+                if tr_data:
+                    default_values.update(tr_data)
+                    st.success(f"✅ Données chargées pour le Transfer ID: {tr_id_to_load}")
+                else:
+                    st.warning(f"⚠ Aucun transfer trouvé avec l'ID: {tr_id_to_load}")
+
+            with st.form("update_tr_form"):
+                transaction_id = st.number_input("Transaction ID", min_value=1, value=default_values['transaction_id'],
+                                                 key="upd_tr_tx_id")
+                from_account = st.number_input("From Account ID", min_value=1, value=default_values['from_account'],
+                                               key="upd_tr_from")
+                to_account = st.number_input("To Account ID", min_value=1, value=default_values['to_account'],
+                                             key="upd_tr_to")
+                reference = st.text_input("Reference", value=default_values['reference'], key="upd_tr_ref")
+                transfer_date = st.date_input("Transfer Date", value=default_values['transfer_date'], key="upd_tr_date")
+
+                if st.form_submit_button("Mettre à jour Transfer"):
+                    if tr_id_to_load:
+                        update_transfer(tr_id_to_load, transaction_id, from_account, to_account, reference,
+                                        transfer_date)
+                    else:
+                        st.error("Veuillez d'abord entrer un ID de transfer valide")
+
+
+        with st.expander("🗑️ Supprimer Transfer"):
             tr_id_del = st.number_input("Transfer ID à supprimer", min_value=1, key="del_tr_id")
             if st.button("Supprimer Transfer"):
                 delete_transfer(tr_id_del)
@@ -514,19 +610,45 @@ with tab_crud:
             if st.button("Ajouter Account"):
                 add_account(**data)
 
-        with st.expander("✏ Mettre à jour Account"):
-            with st.form("update_acc_form"):
-                acc_id         = st.number_input("Account ID", min_value=1, key="upd_acc_id")
-                customer_id    = st.text_input("Customer ID", key="upd_cust")
-                account_num    = st.text_input("Account Number", key="upd_acc_num")
-                opening_date   = st.date_input("Opening Date", key="upd_open")
-                current_balance = st.number_input("Current Balance", format="%.2f", key="upd_bal")
-                status         = st.text_input("Status", key="upd_status")
-                account_type   = st.text_input("Account Type", key="upd_acc_type")
-                if st.form_submit_button("Mettre à jour Account"):
-                    update_account(acc_id, customer_id, account_num, opening_date, current_balance, status, account_type)
+        with st.expander("✏️ Mettre à jour Account"):
+            # Étape 1: Saisir l'ID pour charger les données
+            acc_id_to_load = st.number_input("Entrez l'ID de l'Account à modifier", min_value=1, key="load_acc_id")
 
-        with st.expander("🗑 Supprimer Account"):
+            # Initialiser les valeurs par défaut
+            default_values = {
+                'customer_id': "",
+                'account_num': "",
+                'opening_date': datetime.now().date(),
+                'current_balance': 0.0,
+                'status': "",
+                'account_type': ""
+            }
+
+            # Charger les données si l'ID est fourni
+            if acc_id_to_load:
+                acc_data = get_account_by_id(acc_id_to_load)
+                if acc_data:
+                    default_values.update(acc_data)
+                    st.success(f"✅ Données chargées pour l'Account ID: {acc_id_to_load}")
+                else:
+                    st.warning(f"⚠ Aucun account trouvé avec l'ID: {acc_id_to_load}")
+
+            with st.form("update_acc_form"):
+                customer_id = st.text_input("Customer ID", value=default_values['customer_id'], key="upd_cust")
+                account_num = st.text_input("Account Number", value=default_values['account_num'], key="upd_acc_num")
+                opening_date = st.date_input("Opening Date", value=default_values['opening_date'], key="upd_open")
+                current_balance = st.number_input("Current Balance", format="%.2f",
+                                                  value=default_values['current_balance'], key="upd_bal")
+                status = st.text_input("Status", value=default_values['status'], key="upd_status")
+                account_type = st.text_input("Account Type", value=default_values['account_type'], key="upd_acc_type")
+
+                if st.form_submit_button("Mettre à jour Account"):
+                    if acc_id_to_load:
+                        update_account(acc_id_to_load, customer_id, account_num, opening_date, current_balance, status,
+                                       account_type)
+                    else:
+                        st.error("Veuillez d'abord entrer un ID d'account valide")
+        with st.expander("🗑️ Supprimer Account"):
             acc_id_del = st.number_input("Account ID à supprimer", min_value=1, key="del_acc_id")
             if st.button("Supprimer Account"):
                 delete_account(acc_id_del)
@@ -544,18 +666,44 @@ with tab_crud:
             if st.button("Ajouter Check"):
                 add_check(**data)
 
-        with st.expander("✏ Mettre à jour Check"):
-            with st.form("update_chk_form"):
-                chk_id         = st.number_input("Check ID",        min_value=1, key="upd_chk_id")
-                transaction_id = st.number_input("Transaction ID",  min_value=1, key="upd_chk_tx_id")
-                check_number   = st.text_input("Check Number",     key="upd_chk_number")
-                payee_name     = st.text_input("Payee Name",       key="upd_chk_payee")
-                issue_date     = st.date_input("Issue Date",       key="upd_chk_issue")
-                clearance_date = st.date_input("Clearance Date",   key="upd_chk_clear")
-                if st.form_submit_button("Mettre à jour Check"):
-                    update_check(chk_id, transaction_id, check_number, payee_name, issue_date, clearance_date)
+        with st.expander("✏️ Mettre à jour Check"):
+            # Étape 1: Saisir l'ID pour charger les données
+            chk_id_to_load = st.number_input("Entrez l'ID du Check à modifier", min_value=1, key="load_chk_id")
 
-        with st.expander("🗑 Supprimer Check"):
+            # Initialiser les valeurs par défaut
+            default_values = {
+                'transaction_id': 1,
+                'check_number': "",
+                'payee_name': "",
+                'issue_date': datetime.now().date(),
+                'clearance_date': datetime.now().date()
+            }
+
+            # Charger les données si l'ID est fourni
+            if chk_id_to_load:
+                chk_data = get_check_by_id(chk_id_to_load)
+                if chk_data:
+                    default_values.update(chk_data)
+                    st.success(f"✅ Données chargées pour le Check ID: {chk_id_to_load}")
+                else:
+                    st.warning(f"⚠ Aucun check trouvé avec l'ID: {chk_id_to_load}")
+
+            with st.form("update_chk_form"):
+                transaction_id = st.number_input("Transaction ID", min_value=1, value=default_values['transaction_id'],
+                                                 key="upd_chk_tx_id")
+                check_number = st.text_input("Check Number", value=default_values['check_number'], key="upd_chk_number")
+                payee_name = st.text_input("Payee Name", value=default_values['payee_name'], key="upd_chk_payee")
+                issue_date = st.date_input("Issue Date", value=default_values['issue_date'], key="upd_chk_issue")
+                clearance_date = st.date_input("Clearance Date", value=default_values['clearance_date'],
+                                               key="upd_chk_clear")
+
+                if st.form_submit_button("Mettre à jour Check"):
+                    if chk_id_to_load:
+                        update_check(chk_id_to_load, transaction_id, check_number, payee_name, issue_date,
+                                     clearance_date)
+                    else:
+                        st.error("Veuillez d'abord entrer un ID de check valide")
+        with st.expander("🗑️ Supprimer Check"):
             chk_id_del = st.number_input("Check ID à supprimer", min_value=1, key="del_chk_id")
             if st.button("Supprimer Check"):
                 delete_check(chk_id_del)
