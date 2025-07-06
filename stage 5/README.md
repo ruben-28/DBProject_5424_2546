@@ -57,7 +57,11 @@ The **CRUD** tab lets you:
 1. Select one of four tables: `Transaction`, `Transfer`, `Check`, or `Account`.
 2. View the current rows in the selected table.
 3. Add, update or delete records via expandable forms.
-![CRUD tab](pictures/crud_tab.png)
+![CRUD tab](pictures/transacation1.jpg)
+![CRUD tab](pictures/transacation2.jpg)
+![CRUD tab](pictures/transacation3.jpg)
+![CRUD tab](pictures/transacation4.jpg)
+![CRUD tab](pictures/transacation5.jpg)
 
 ### Rapports tab
 The **Rapports** tab provides a few reporting tools:
@@ -65,7 +69,11 @@ The **Rapports** tab provides a few reporting tools:
 - "Totaux mensuels par type" – displays monthly totals for transaction types.
 - "Transactions > 1 000 000" – lists large transactions above a configurable threshold.
 - Buttons to execute the stored procedures `update_inactive_accounts` and `check_and_block_overdrafts`.
-![Reports tab](pictures/reports_tab.png)
+![Reports tab](pictures/rapport1.jpg)
+![Reports tab](pictures/rapport2.jpg)
+![Reports tab](pictures/rapport3.jpg)
+![Reports tab](pictures/rapport4.jpg)
+
 
 ## Workflow and tools
 
