@@ -48,7 +48,7 @@ streamlit run streamlit_app.py
 
 ### Login
 The first screen prompts for a username and password. Only after a successful login can you access the rest of the application.
-![Login screen](pictures/login_screen.png)
+![Login screen](pictures/login_screen.jpg)
 
 ### CRUD tab
 After logging in, the app displays two tabs.
